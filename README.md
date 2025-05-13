@@ -1,0 +1,1 @@
+Geologiya Fanlari uchun!
