@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}OAuth Callback{% endblock %}
+
+{% block content %}
+
+    <h1>Foydalanuvchi ma'lumotlari</h1>
+    <p><strong>Access Token:</strong> {{ access_token }}</p>
+    <h2>Details:</h2>
+    <ul>
+        {% for key, value in user_details.items %}
+            <li><strong>{{ key }}:</strong> {{ value }}</li>
+        {% endfor %}
+    </ul>
+
+{% endblock %}
