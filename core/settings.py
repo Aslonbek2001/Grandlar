@@ -2,7 +2,9 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-83p+tgqvg4xo1hbn22rpofna@8&mr098pgzon-*r43y^n^x11q'
 DEBUG = True
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "*"
+]
 
 INSTALLED_APPS = [
     'jazzmin', 
@@ -16,16 +18,21 @@ INSTALLED_APPS = [
     'main', # Qo'shimcha Statistika va shunga o'xshash ma'lumotlar uchun
     'employee', # Xodimlar bilan ishlash agar kerak bo'lsa
     'student', # Hemis login, data studentlar uchun
-
+    'users'
 ]
+AUTH_USER_MODEL = 'users.User'
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://grand.uzgeouniver.uz",  # https bo‘lishi kerak
+    "http://grand.uzgeouniver.uz",   # agar faqat http bo‘lsa
+]
 
 CLIENT_ID = 3
 CLIENT_SECRET = 'P6BJGjhsilgzlyqMlvftWxKZ49UT1E0NhFKlVIec'
-REDIRECT_URI = "https://grand.uzgeouniver.uz"
-AUTHORIZE_URL = "https://hemis.uzgeouniver.uz/oauth/authorize"
-TOKEN_URL = "https://hemis.uzgeouniver.uz/oauth/access-token"
-RESOURCE_OWNER_URL = "https://hemis.universituzgeounivery_name.uz/oauth/api/user?fields="
+REDIRECT_URI = "https://grand.uzgeouniver.uz/student/data/"
+AUTHORIZE_URL = "https://student.uzgeouniver.uz/oauth/authorize"
+TOKEN_URL = "https://student.uzgeouniver.uz/oauth/access-token"
+RESOURCE_OWNER_URL = "https://student.uzgeouniver.uz/oauth/api/user?fields="
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

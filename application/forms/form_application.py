@@ -1,3 +1,6 @@
+
+# Hemissiz foydalangan xolatda
+
 from django import forms
 from application.models import Application
 from django.core.validators import RegexValidator
