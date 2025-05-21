@@ -10,13 +10,8 @@ def save_user_and_student(user_info: dict):
     user, created = User.objects.update_or_create(
         email=user_info["email"],
         defaults={
-            "username": user_info["login"],
             "role": user_info.get("type", "student"),
-            "first_name": data.get("first_name", ""),
-            "second_name": data.get("second_name", ""),
-            "third_name": data.get("third_name", ""),
             "full_name": data.get("full_name", ""),
-            "short_name": data.get("short_name", ""),
             "phone": data.get("phone", ""),
             "address": data.get("address", ""),
         }
@@ -44,18 +39,10 @@ def save_user_and_student(user_info: dict):
             "specialty": data.get("specialty", {}).get("name", ""),
             "studentStatus": data.get("studentStatus", {}).get("name", ""),
             "educationForm": data.get("educationForm", {}).get("name", ""),
-            "educationType": data.get("educationType", {}).get("name", ""),
-            "paymentForm": data.get("paymentForm", {}).get("name", ""),
             "group": data.get("group", {}).get("name", ""),
-            "educationLang": data.get("educationLang", {}).get("name", ""),
-            "faculty": data.get("faculty", {}).get("name", ""),
             "localityType": data.get("faculty", {}).get("localityType", {}).get("name", ""),
             "level": data.get("level", {}).get("name", ""),
             "semester": data.get("semester", {}).get("name", ""),
-            "education_year": data.get("semester", {}).get("education_year", {}).get("name", ""),
-            "province": data.get("province", {}).get("name", ""),
-            "district": data.get("district", {}).get("name", ""),
-            "accommodation": data.get("accommodation", {}).get("name", ""),
         }
     )
 

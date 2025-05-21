@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
 from users.models import User
 from django.views import View
-from application.forms.create_application_hemis import ApplicationForm, StudentForm, UserForm
+from application.forms.create_application_hemis import ApplicationForm, UserForm
 from django.contrib import messages
+from application.models import Application, ApplicationStatus
+
 
 class ApplicationCreateView(View):
     def get(self, request):
@@ -17,23 +19,25 @@ class ApplicationCreateView(View):
         except User.profile.RelatedObjectDoesNotExist:
             messages.info(request, "Sizning ma'lumotlaringiz topilmadi!")
             return redirect('main:index')
-
-
-        application_form = ApplicationForm(initial={'student': user.profile})
-        student_form = StudentForm(instance=user.profile)
+        
         user_form = UserForm(instance=user)
         
-        return render(request, 'result/application/application_create.html', {
-            'application_form': application_form,
-            'student_form': student_form,
-            'user_form': user_form
+        return render(request, 'application/create.html', {
+            'user_form': user_form,
         })
         
 
     def post(self, request):
         form = ApplicationForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            
-            return render(request, template_name='result/index.html',context={'message': "Arizangiz yuborildi."})
+        user = request.user
+        student = user.profile
+
+        if Application.objects.filter(student=student).exists():
+            messages.info(request, "Siz allaqachon ariza topshirgansiz.")
+            return redirect('main:index') 
         
+        new_application = Application(student=student, application_status=ApplicationStatus.NEW)
+        new_application.save()
+
+        messages.success(request, "Ariza muvofaqiyatli yuborildi")
+        return redirect('main:index') 

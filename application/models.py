@@ -1,6 +1,7 @@
 from django.db import models
 from student.models import Student
 
+
 """Application Status - Ariza holati"""
 class ApplicationStatus(models.TextChoices):
     NEW = 'new', 'New'
@@ -8,21 +9,10 @@ class ApplicationStatus(models.TextChoices):
     REJECTED = 'rejected', 'Rejected'
 
 """Application model - Ariza modeli"""
-class Application(models.Model):
-    student = models.OneToOneField(Student, on_delete=models.CASCADE, related_name="applications" )
-    student_education_direction = models.CharField(
-        max_length=20,
-        verbose_name="Ta'lim yo'nalishi"
-    )
-    student_privilege_category = models.CharField(
-        max_length=20,
-        verbose_name="Imtiyozlar toifasi"
-    )
-    student_education_level = models.CharField(
-        max_length=20,
-        verbose_name="Ta'lim darajasi"
-    )
 
+
+class Application(models.Model):
+    student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name="applications")
     application_status = models.CharField(
         max_length=10,
         choices=ApplicationStatus.choices,
@@ -51,12 +41,34 @@ class Application(models.Model):
         verbose_name_plural = 'Applications'
         ordering = ['-created_at']
         indexes = [
-            
-      
-            models.Index(fields=['student_education_direction']),
-            models.Index(fields=['student_privilege_category']),
-            models.Index(fields=['student_education_level']),
             models.Index(fields=['application_status']),
             models.Index(fields=['created_at']),
         ]
+
+
+class SpiritualityBall(models.Model):
+    field1 = models.DecimalField(max_digits=3, decimal_places=1,)
+    field2 = models.DecimalField(max_digits=3, decimal_places=1)
+    field3 = models.DecimalField(max_digits=3, decimal_places=1)
+    field4 = models.DecimalField(max_digits=3, decimal_places=1)
+    field5 = models.DecimalField(max_digits=3, decimal_places=1)
+    field6 = models.DecimalField(max_digits=3, decimal_places=1)
+    field7 = models.DecimalField(max_digits=3, decimal_places=1)
+    field8 = models.DecimalField(max_digits=3, decimal_places=1)
+    field9 = models.DecimalField(max_digits=3, decimal_places=1)
+    field10 = models.DecimalField(max_digits=3, decimal_places=1)
+
+
+class TrainingBall(models.Model):
+    field = models.DecimalField(max_digits=3, decimal_places=1)
+
+
+class BallApplication(models.Model):
+    application = models.OneToOneField(to=Application, on_delete=models.CASCADE, related_name='apps')
+    ball_spirituality = models.OneToOneField(to=SpiritualityBall, on_delete=models.CASCADE, related_name='spirituality', null=True, blank=True)
+    ball_training = models.OneToOneField(to=TrainingBall, on_delete=models.CASCADE, related_name='training', null=True, blank=True)
+
+
+
+
 

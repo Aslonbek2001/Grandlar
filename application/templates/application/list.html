@@ -1,0 +1,48 @@
+{% extends 'result/base_page.html' %}
+{% load static %}
+{% block title %}Arizalar Ro'yxati{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-3">Arizalar Ro'yxati</h2>
+
+    {% if request.user.role == "spirituality" %}
+        <p class="text-success">Siz barcha arizalarni ko'rmoqdasiz.</p>
+    {% elif request.user.role == "training" %}
+        <p class="text-primary">Siz faqat yangi arizalarni ko'rmoqdasiz.</p>
+    {% elif request.user.role == "student" %}
+        <p class="text-info">Siz yuborgan arizalaringiz:</p>
+    {% elif request.user.role == "special" %}
+        <p class="text-warning">Siz maxsus ruxsat bilan barcha arizalarni ko'rmoqdasiz.</p>
+    {% endif %}
+
+    <table class="table table-bordered table-hover mt-3">
+        <thead class="thead-light">
+            <tr>
+                <th>#</th>
+                <th>F.I.Sh</th>
+                <th>Status</th>
+                <th>Yuborilgan Sana</th>
+                <th>Ko'rish</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for app in applications %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ app.student.user.get_full_name }}</td>
+                    <td>{{ app.get_application_status_display }}</td>
+                    <td>{{ app.created_at|date:"Y-m-d H:i" }}</td>
+                    <td>
+                        <a href="#" class="btn btn-sm btn-info">Ko'rish</a> {% comment %}. {% url 'application:detail' app.pk %}. {% endcomment %}
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="5" class="text-center">Hozircha hech qanday ariza yo'q.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

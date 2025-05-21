@@ -10,18 +10,12 @@ class Student(models.Model):
     specialty = models.CharField(verbose_name="Mutaxasislik", max_length=100)
     studentStatus = models.CharField(verbose_name="Talaba xolati", max_length=20)
     educationForm = models.CharField(verbose_name="O'quv formati", max_length=50)
-    educationType = models.CharField(verbose_name="O'qish turi", max_length=50)
-    paymentForm = models.CharField(verbose_name="To'lov xolati", max_length=50)
     group = models.CharField(verbose_name="Talaba gruh nomi", max_length=50)
-    educationLang = models.CharField(verbose_name="O'qish tili", max_length=50)
-    faculty = models.CharField(verbose_name="Fakultet", max_length=50)
     localityType = models.CharField(verbose_name="Hudud", max_length=50)
     level = models.CharField(verbose_name="Bosqich talabasi", max_length=50)
     semester = models.CharField(verbose_name="Semestr", max_length=50)
-    education_year = models.CharField(verbose_name="O'quv yili", max_length=20)
-    province = models.CharField(verbose_name="Viloyat", max_length=50)
-    district = models.CharField(verbose_name="Tuman", max_length=50)
-    accommodation = models.CharField(verbose_name="Turar joyi", max_length=50)
+    
+    updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -34,4 +28,4 @@ class Student(models.Model):
             models.Index(fields=['created_at']),  
         ]
     def __str__(self):
-        return self.user.username
+        return self.user.full_name

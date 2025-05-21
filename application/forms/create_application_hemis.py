@@ -14,8 +14,7 @@ phone_regex = RegexValidator(
 class UserForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ['email', 'username', 'first_name', 'second_name', 'third_name', 
-                  'full_name', 'short_name', 'phone', 'address', 'role']
+        fields = ['full_name', 'address']
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -29,24 +28,24 @@ class StudentForm(forms.ModelForm):
     class Meta:
         model = Student
         fields = ['user', 'student_id_number', 'image', 'passport_number', 'gpa', 
-                  'specialty', 'studentStatus', 'educationForm', 'educationType', 
-                  'paymentForm', 'group', 'educationLang', 'faculty', 'localityType', 
-                  'level', 'semester', 'education_year', 'province', 'district', 
-                  'accommodation']
+                  'specialty', 'studentStatus', 'educationForm',  
+                  'group', 'level', 'semester']
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field in self.fields.values():
             field.disabled = True
-        
-
 
 class ApplicationForm(forms.ModelForm):
     student = StudentForm()
-
     class Meta:
         model = Application
-        fields = ['student', 'student_education_direction', 'student_privilege_category', 
-                  'student_education_level', 'application_status']
+        fields = ['student', 'application_status']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['student'].disabled = True
+
+        
     
   

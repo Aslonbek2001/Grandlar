@@ -36,12 +36,16 @@ class HemisCallbackView(View):
         access_token = token_data.get('access_token')
         if not access_token:
             return render(request, 'error.html', {'error': 'Access token not found.'})
+        
+        print("Token", "*"*50, "\n", access_token,"\n", "*"*50)
 
         # # Step 2: get user info
         user_info = client.get_user_details(access_token)
+        print("User Info", "*"*50, "\n",user_info,"\n", "*"*50)
+        
+        
         user, student = save_user_and_student(user_info)
         
-        # Step 3: log user in or create
         login(request, user)
         messages.success(request, "Ariza yuborishingiz mumkin!")
         return redirect('main:index')

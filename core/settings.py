@@ -34,6 +34,8 @@ AUTHORIZE_URL = "https://student.uzgeouniver.uz/oauth/authorize"
 TOKEN_URL = "https://student.uzgeouniver.uz/oauth/access-token"
 RESOURCE_OWNER_URL = "https://student.uzgeouniver.uz/oauth/api/user?fields="
 
+
+LOGIN_REDIRECT_URL = '/admin/'
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
