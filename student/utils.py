@@ -5,15 +5,16 @@ import requests
 
 def save_user_and_student(user_info: dict):
     data = user_info.get("data", {})
+    print("\n", user_info, "\n")
     
     # 1. User yaratish yoki yangilash
     user, created = User.objects.update_or_create(
-        email=user_info["email"],
+        full_name = data.get("full_name", ""),
         defaults={
             "role": user_info.get("type", "student"),
-            "full_name": data.get("full_name", ""),
             "phone": data.get("phone", ""),
             "address": data.get("address", ""),
+            "email": data.get("email", "")
         }
     )
 
@@ -35,7 +36,7 @@ def save_user_and_student(user_info: dict):
             "student_id_number": user_info.get("student_id_number"),
             "image": image_file if image_file else None,
             "passport_number": user_info.get("passport_number"),
-            "gpa": 0.00,  # agar GPA yo'q bo'lsa default qiymat
+            "gpa": data.get('avg_gpa'),
             "specialty": data.get("specialty", {}).get("name", ""),
             "studentStatus": data.get("studentStatus", {}).get("name", ""),
             "educationForm": data.get("educationForm", {}).get("name", ""),

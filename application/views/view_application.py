@@ -3,7 +3,7 @@ from users.models import User
 from django.views import View
 from application.forms.create_application_hemis import ApplicationForm, UserForm
 from django.contrib import messages
-from application.models import Application, ApplicationStatus
+from application.models import Application, ApplicationStatus, BallApplication
 
 
 class ApplicationCreateView(View):
@@ -36,8 +36,10 @@ class ApplicationCreateView(View):
             messages.info(request, "Siz allaqachon ariza topshirgansiz.")
             return redirect('main:index') 
         
-        new_application = Application(student=student, application_status=ApplicationStatus.NEW)
-        new_application.save()
+        new_application = Application.objects.create(student=student, application_status=ApplicationStatus.NEW)
+        ball_application = BallApplication.objects.create(application=new_application)
+        print("Bal xam saqlandi.", ball_application.id)
+        
 
         messages.success(request, "Ariza muvofaqiyatli yuborildi")
         return redirect('main:index') 

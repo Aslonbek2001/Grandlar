@@ -27,10 +27,6 @@ class CustomUserManager(BaseUserManager):
         return self.create_user(full_name, email, password, **extra_fields)
 
 
-class UserRole(models.Choices):
-    STUDENT = 'student', 'Student'
-    EMPLOYEE = 'employee', 'Employee'
-
 class User(AbstractUser):
     username = None
     ROLE_CHOICES = (
@@ -49,6 +45,11 @@ class User(AbstractUser):
     REQUIRED_FIELDS = ['email']
 
     objects = CustomUserManager()
+
+    def save(self, *args, **kwargs):
+        if self.pk is None or not self.password.startswith('pbkdf2'):
+            self.set_password(self.password)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.full_name

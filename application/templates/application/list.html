@@ -7,22 +7,53 @@
     <h2 class="mb-3">Arizalar Ro'yxati</h2>
 
     {% if request.user.role == "spirituality" %}
-        <p class="text-success">Siz barcha arizalarni ko'rmoqdasiz.</p>
+        <p class="text-success">Siz Bo'lim 2 ga kelgan arizalarni ko'rmoqdasiz</p>
     {% elif request.user.role == "training" %}
-        <p class="text-primary">Siz faqat yangi arizalarni ko'rmoqdasiz.</p>
+        <p class="text-primary">Siz Bo'lim 1 ga kelgan arizalarni ko'rmoqdasiz</p>
     {% elif request.user.role == "student" %}
         <p class="text-info">Siz yuborgan arizalaringiz:</p>
     {% elif request.user.role == "special" %}
-        <p class="text-warning">Siz maxsus ruxsat bilan barcha arizalarni ko'rmoqdasiz.</p>
+        <p class="text-warning">Siz Bo'lim 1 va 2 baxolagan arizalarni ko'rmoqdasiz.</p>
     {% endif %}
+
+<!-- Bootstrap Dropdown -->
+<div class="dropdown">
+  <button class="btn btn-getstarted dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+    {% if request.GET.training == "none" or request.GET.ball_spirituality == "none" %}
+        Yangi kelgan arizalar
+    {% elif request.GET.training == "exists" or request.GET.ball_spirituality == "exists" %}
+        Baholangan arizalar
+    {% else %}
+        Ariza holatini tanlang
+    {% endif %}
+  </button>
+
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    {% if request.user.role == "training" %}
+        <li><a class="dropdown-item" href="?training=none">Yangi kelgan arizalar</a></li>
+        <li><a class="dropdown-item" href="?training=exists">Baholangan arizalar</a></li>
+    {% elif request.user.role == "spirituality" %}
+        <li><a class="dropdown-item" href="?ball_spirituality=none">Yangi kelgan arizalar</a></li>
+        <li><a class="dropdown-item" href="?ball_spirituality=exists">Baholangan arizalar</a></li>
+    {% elif request.user.role == "special" %}
+        <li><a class="dropdown-item" href="#">Yangi kelgan arizalar</a></li>
+        <li><a class="dropdown-item" href="#">Baholangan arizalar</a></li>
+    {% endif %}
+  </ul>
+</div>
+
+
 
     <table class="table table-bordered table-hover mt-3">
         <thead class="thead-light">
             <tr>
                 <th>#</th>
                 <th>F.I.Sh</th>
-                <th>Status</th>
+                {% if request.user.role != 'student' %}
+                    <th>Ball</th>
+                {% endif %}
                 <th>Yuborilgan Sana</th>
+                <th>Status</th>
                 <th>Ko'rish</th>
             </tr>
         </thead>
@@ -30,12 +61,19 @@
             {% for app in applications %}
                 <tr>
                     <td>{{ forloop.counter }}</td>
-                    <td>{{ app.student.user.get_full_name }}</td>
-                    <td>{{ app.get_application_status_display }}</td>
-                    <td>{{ app.created_at|date:"Y-m-d H:i" }}</td>
+                    <td>{{ app.application.student.user.full_name }}</td>
+                    {% if request.user.role == 'training' %}
+                        <td>{{ app.ball_training.field }}</td>
+                    {% elif request.user.role == 'spirituality' %}
+                        <td>{{ app.ball_spirituality.total }}</td>
+                    {% elif request.user.role == 'special' %}
+                        <td>M: {{ app.ball_spirituality.total }} T: {{ app.ball_training.field }} </td>
+                    {% endif %}
+                    <td>{{ app.application.created_at|date:"Y-m-d H:i" }}</td>
+                    <td>{{ app.application.application_status}}</td>
                     <td>
-                        <a href="#" class="btn btn-sm btn-info">Ko'rish</a> {% comment %}. {% url 'application:detail' app.pk %}. {% endcomment %}
-                    </td>
+                        <a href="{% url 'application:detail' app.pk %}" class="btn btn-sm btn-info">Ko'rish</a> 
+                    </td> 
                 </tr>
             {% empty %}
                 <tr>

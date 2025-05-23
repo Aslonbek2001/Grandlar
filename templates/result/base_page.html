@@ -69,29 +69,43 @@
       <nav id="navmenu" class="navmenu">
         <ul>
           <li><a href="{% url 'main:index' %}" class="active">Bosh sahifa</a></li>
-          <li><a href="{% url 'main:index' %}#about">Biz haqimizda</a></li>
+          <li><a href="{% url 'main:index' %}#about">Ma'lumotlar</a></li>
           <li><a href="{% url 'main:index' %}#contact">Aloqa</a></li>
+
           {% if request.user.is_authenticated %}
-            {% if  request.user.rule != 'student' %}
-              <li><a href="{% url 'application:list' %}"><b>Arizalar</b></a></li>
-            {% endif %}
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" 
+                  data-bs-toggle="dropdown" aria-expanded="false">
+                  {{request.user.full_name}}
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <li><a class="dropdown-item" href="#">Profil</a></li>
+                  <li><a class="dropdown-item" href="{% url 'application:list' %}">Arizalar</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li>
+                    <a class="dropdown-item center" href="#">
+                      <form method="post" action="{% url 'main:logout' %}">
+                          {% csrf_token %}
+                          <button type="submit" class='btn btn-outline-link'><i class="bi bi-arrow-bar-left fs-6"></i> Chiqish</button>
+                      </form>
+                    </a>
+                  </li>
+                </ul>
+            </li>
+
+          {% else %}
+          <a class="btn-getstarted" href="{% url 'users:login' %}">Kirish</a>
           {% endif %}
 
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
-      {% if request.user.is_authenticated %}
-        <form method="post" action="{% url 'main:logout' %}">
-            {% csrf_token %}
-            <button type="submit" class='btn btn-getstarted'>Logout</button>
-        </form>
-      {% else %}
-        <a class="btn-getstarted" href="{% url 'admin:login' %}">Kirish</a>
-      {% endif %}
     </div>
   </header>
-  <main>
 
+
+
+  <main>
     {% if messages %}
       <div aria-live="polite" aria-atomic="true" class="position-relative">
         <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 1055;">
@@ -108,7 +122,6 @@
         </div>
       </div>
     {% endif %}
-
     {% block content %}
     {% endblock %}
   </main>
@@ -196,6 +209,13 @@
 
   <!-- Main JS File -->
   <script src="{% static 'proj/js/main.js' %}"></script>
+  <script>
+    document.getElementById("dropdownBtn").addEventListener("click", function() {
+        const menu = document.getElementById("dropdownMenu");
+        menu.classList.toggle("hidden");
+    });
+  </script>
+
 
 
 

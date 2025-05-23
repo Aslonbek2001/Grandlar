@@ -1,29 +1,48 @@
 from django.views.generic import ListView
-from application.models import Application, ApplicationStatus
+from application.models import BallApplication
 
 class ApplicationListView(ListView):
-    model = Application
+    model = BallApplication
     template_name = 'application/list.html'
     context_object_name = 'applications' 
     
     def get_queryset(self):
         user = self.request.user
+        queryset = BallApplication.objects.all()
+        training_filter = self.request.GET.get('training', None)
+        spirituality_filter = self.request.GET.get('ball_spirituality', None)
 
         if user.role == 'student':
-            # Talaba faqat o‘z arizalarini ko‘radi
-            return Application.objects.filter(student=user.profile)
-        
-        elif user.role == 'training':
-            # Manager faqat yangi arizalarni ko‘radi
-            return Application.objects.filter(application_status=ApplicationStatus.NEW)
+            return queryset.filter(application__student=user.profile)
 
-        elif user.role == 'spirituality':
-            # Admin barcha arizalarni ko‘radi
-            return Application.objects.all()
+        if user.role == 'training':
+            if training_filter == 'exists':
+                queryset = queryset.filter(ball_training__isnull=False)
+            elif training_filter == 'none':
+                queryset = queryset.filter(ball_training__isnull=True)
+            
+            return queryset
         
+        elif user.role == 'spirituality':
+            if spirituality_filter == 'exists':
+                queryset = queryset.filter(ball_spirituality__isnull=False)
+            elif spirituality_filter == 'none':
+                queryset = queryset.filter(ball_spirituality__isnull=True)
+            
+            return queryset
+
         elif user.role == 'special':
-            # Admin barcha arizalarni ko‘radi
-            return Application.objects.all()
+            return queryset.filter(ball_spirituality__isnull=False,  ball_training__isnull=False)
+        
+        return BallApplication.objects.none()
+    
+        
+
+
+        
+        
+
+
 
 
 
