@@ -54,7 +54,7 @@ class ApplicationDetailView(View):
                 ball.ball_training = training_instance
                 ball.save()
                 messages.success(request, "Arizaga ball muvofaqiyatli qo'yildi!")
-                return HttpResponseRedirect(request.path)  # or success URL
+                return redirect('application:list')
  
         elif user.role == 'spirituality':
             form = SpiritualityBallForm(request.POST)
@@ -63,7 +63,7 @@ class ApplicationDetailView(View):
                 ball.ball_spirituality = spirituality_instance
                 ball.save()
                 messages.success(request, "Arizaga ball muvofaqiyatli qo'yildi!")
-                return HttpResponseRedirect(request.path)  # or success URL
+                return redirect('application:list')
 
         else:
             form = SpecialForm(request.POST)
@@ -73,7 +73,7 @@ class ApplicationDetailView(View):
                 application_obj.application_status = status
                 application_obj.save()
                 messages.success(request, "Maxsus holat saqlandi.")
-                return HttpResponseRedirect(request.path)
+                return redirect('application:list')
 
         # Agar form xato bo'lsa yoki valid emas bo‘lsa
         return render(request, 'application/detail.html', {
