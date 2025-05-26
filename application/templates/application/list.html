@@ -4,9 +4,33 @@
 
 {% block content %}
 <div class="container mt-4">
-        <div>
-            <h2 class="mb-3">Arizalar Ro'yxati</h2>
+    <div>
+        <h2 class="mb-3">Arizalar Ro'yxati</h2>
+            <!-- Bootstrap Dropdown -->
+            <div class="dropdown my-text d-inline-block">
+                <button class="btn btn-getstarted fs-5 border dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                    {% if request.GET.training == "none" or request.GET.ball_spirituality == "none" %}
+                        Yangi kelgan arizalar
+                    {% elif request.GET.training == "exists" or request.GET.ball_spirituality == "exists" %}
+                        Baholangan arizalar
+                    {% else %}
+                        Ariza holatini tanlang
+                    {% endif %}
+                </button>
 
+                <ul class="dropdown-menu my-text" aria-labelledby="dropdownMenuButton">
+                    {% if request.user.role == "training" %}
+                        <li><a class="dropdown-item my-text" href="?training=none">Yangi kelgan arizalar</a></li>
+                        <li><a class="dropdown-item my-text" href="?training=exists">Baholangan arizalar</a></li>
+                    {% elif request.user.role == "spirituality" %}
+                        <li><a class="dropdown-item my-text" href="?ball_spirituality=none">Yangi kelgan arizalar</a></li>
+                        <li><a class="dropdown-item my-text" href="?ball_spirituality=exists">Baholangan arizalar</a></li>
+                    {% elif request.user.role == "special" %}
+                        <li><a class="dropdown-item my-text" href="#">Yangi kelgan arizalar</a></li>
+                        <li><a class="dropdown-item my-text" href="#">Baholangan arizalar</a></li>
+                    {% endif %}
+                </ul>
+            </div>
             {% if request.user.role == "spirituality" %}
                 <p class="text-success">Ijtimoiy faollikni aniqlash bo'yicha komissiya</p>
             {% elif request.user.role == "training" %}
@@ -16,32 +40,6 @@
             {% elif request.user.role == "special" %}
                 <p class="text-warning">Maxsus komissiya</p>
             {% endif %}
-
-        <!-- Bootstrap Dropdown -->
-        <div class="dropdown my-text d-inline-block">
-        <button class="btn btn-getstarted fs-5 border dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-            {% if request.GET.training == "none" or request.GET.ball_spirituality == "none" %}
-                Yangi kelgan arizalar
-            {% elif request.GET.training == "exists" or request.GET.ball_spirituality == "exists" %}
-                Baholangan arizalar
-            {% else %}
-                Ariza holatini tanlang
-            {% endif %}
-        </button>
-
-        <ul class="dropdown-menu my-text" aria-labelledby="dropdownMenuButton">
-            {% if request.user.role == "training" %}
-                <li><a class="dropdown-item my-text" href="?training=none">Yangi kelgan arizalar</a></li>
-                <li><a class="dropdown-item my-text" href="?training=exists">Baholangan arizalar</a></li>
-            {% elif request.user.role == "spirituality" %}
-                <li><a class="dropdown-item my-text" href="?ball_spirituality=none">Yangi kelgan arizalar</a></li>
-                <li><a class="dropdown-item my-text" href="?ball_spirituality=exists">Baholangan arizalar</a></li>
-            {% elif request.user.role == "special" %}
-                <li><a class="dropdown-item my-text" href="#">Yangi kelgan arizalar</a></li>
-                <li><a class="dropdown-item my-text" href="#">Baholangan arizalar</a></li>
-            {% endif %}
-        </ul>
-        </div>
 
     </div>
 
@@ -71,7 +69,7 @@
                     {% elif request.user.role == 'spirituality' %}
                         <td class="text-center">{{ app.ball_spirituality.total }}</td>
                     {% elif request.user.role == 'special' %}
-                        <td class="text-center">M: {{ app.ball_spirituality.total }} T: {{ app.ball_training.field }} </td>
+                        <td class="text-center">M: {{ app.ball_spirituality.total }} T: {{ app.ball_training.field }} Umumiy: {{app.total_ball }}</td>
                     {% endif %}
                     <td class="text-center">{{ app.application.created_at|date:"Y-m-d H:i" }}</td>
                     <td class="text-center">
@@ -84,7 +82,7 @@
                         {% endif %}
                     </td>
                     <td class="text-center">
-                        <a href="{% url 'application:detail' app.pk %}" class="btn btn-sm my-btn-color ">Ko'rish</a> 
+                        <a href="{% url 'application:detail' app.pk %}" class="btn btn-sm my-btn-color">Ko'rish</a> 
                     </td> 
                 </tr>
             {% empty %}

@@ -216,7 +216,14 @@
         const menu = document.getElementById("dropdownMenu");
         menu.classList.toggle("hidden");
     });
-  </script>
+    function selectStatus(value, label) {
+        // statusni o'rnatish
+        document.getElementById('applicationStatusInput').value = value;
+        // dropdown tugmasi matnini o'zgartirish
+        document.getElementById('statusDropdown').textContent = label;
+    }
+
+    </script>
 
 
 

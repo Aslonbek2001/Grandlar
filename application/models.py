@@ -1,10 +1,11 @@
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from student.models import Student
 
 
 """Application Status - Ariza holati"""
 class ApplicationStatus(models.TextChoices):
-    NEW = 'new', 'New'
+    NEW = 'new', 'Yangi'
     APPROVED = 'approved', 'Tasdiqlandi'
     REJECTED = 'rejected', 'Rad etildi'
 
@@ -47,34 +48,38 @@ class Application(models.Model):
 
 
 class SpiritualityBall(models.Model):
-    field1 = models.DecimalField(max_digits=3, decimal_places=1,)
-    field2 = models.DecimalField(max_digits=3, decimal_places=1)
-    field3 = models.DecimalField(max_digits=3, decimal_places=1)
-    field4 = models.DecimalField(max_digits=3, decimal_places=1)
-    field5 = models.DecimalField(max_digits=3, decimal_places=1)
-    field6 = models.DecimalField(max_digits=3, decimal_places=1)
-    field7 = models.DecimalField(max_digits=3, decimal_places=1)
-    field8 = models.DecimalField(max_digits=3, decimal_places=1)
-    field9 = models.DecimalField(max_digits=3, decimal_places=1)
-    field10 = models.DecimalField(max_digits=3, decimal_places=1)
+    field1 = models.DecimalField(max_digits=3, decimal_places=1, validators=[ MinValueValidator(0), MaxValueValidator(20)], verbose_name="Kitobxonlik madaniyati (0-20)")
+    field2 = models.DecimalField(max_digits=3, decimal_places=1, validators=[ MinValueValidator(0), MaxValueValidator(20)], verbose_name=""" "5 muxim tashabbus" doirasidagi to'garaklarda faol ishtiroki (0-20)""")
+    field3 = models.DecimalField(max_digits=3, decimal_places=1, validators=[ MinValueValidator(0), MaxValueValidator(10)], verbose_name="Talabaning akademik o'zlashtirishi (0-10)")
+    field4 = models.DecimalField(max_digits=3, decimal_places=1, validators=[ MinValueValidator(0), MaxValueValidator(5)], verbose_name="Talabaning oliy ta'lim tashkilotining ichki tartib qoidalari va odob-axloq kodeksiga rioya etishi (0-5)")
+    field5 = models.DecimalField(max_digits=3, decimal_places=1, validators=[ MinValueValidator(0), MaxValueValidator(10)], verbose_name="Xalqaro, respublika, viloyat miqyosidagi ko'rik-tanlov, fan olimpiadalari va sport musobaqalarida erishgan natijalari (0-10)")
+    field6 = models.DecimalField(max_digits=3, decimal_places=1, validators=[ MinValueValidator(0), MaxValueValidator(5)], verbose_name="Talabaning darslarga to'liq va kechikmasdan kelishi (0-5)")
+    field7 = models.DecimalField(max_digits=3, decimal_places=1, validators=[ MinValueValidator(0), MaxValueValidator(10)], verbose_name=""" Talabalarning "Ma'rifat darslari" dagi faol ishtiroki (0-10)""")
+    field8 = models.DecimalField(max_digits=3, decimal_places=1, validators=[ MinValueValidator(0), MaxValueValidator(5)], verbose_name="Volontyorlik va jamoat ishlaridagi faolligi (0-5)")
+    field9 = models.DecimalField(max_digits=3, decimal_places=1, validators=[ MinValueValidator(0), MaxValueValidator(5)], verbose_name="Teatr va muzey, xiyobon, kino, tarixiy qadamjolarga tashriflar (0-5)")
+    field10 = models.DecimalField(max_digits=3, decimal_places=1, validators=[ MinValueValidator(0), MaxValueValidator(5)], verbose_name="Talabalarning sport bilan shug‘ullanishi va sog‘lom turmush tarziga amal qilishi (0-5)")
 
     @property
     def total(self):
-        return (
-            self.field1 + self.field2 + self.field3 + self.field4 + self.field5 +
-            self.field6 + self.field7 + self.field8 + self.field9 + self.field10
-        )
+        fields = [f'field{i}' for i in range(1, 11)]
+        return sum(getattr(self, field) or 0 for field in fields)
     
 
 
 class TrainingBall(models.Model):
-    field = models.DecimalField(max_digits=3, decimal_places=1)
+    field = models.DecimalField(max_digits=3, decimal_places=1, verbose_name="Talabaning o'zlshtirish ko'rsatkichi")
 
 
 class BallApplication(models.Model):
     application = models.OneToOneField(to=Application, on_delete=models.CASCADE, related_name='apps')
     ball_spirituality = models.OneToOneField(to=SpiritualityBall, on_delete=models.CASCADE, related_name='spirituality', null=True, blank=True)
     ball_training = models.OneToOneField(to=TrainingBall, on_delete=models.CASCADE, related_name='training', null=True, blank=True)
+
+    @property
+    def total_ball(self):
+        return self.ball_spirituality.total + self.ball_training.field
+
+
 
     def __str__(self):
         return f'{self.application.student.user.full_name}'

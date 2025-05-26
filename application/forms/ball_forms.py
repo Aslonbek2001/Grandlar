@@ -19,3 +19,9 @@ class SpecialForm(forms.ModelForm):
     class Meta:
         model = Application
         fields = ['application_status']
+        widgets = {
+            'application_status': forms.Select(attrs={'class': 'form-select'})
+        }
+        labels = {
+            'application_status': 'Ariza holati'
+        }

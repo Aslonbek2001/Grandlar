@@ -14,43 +14,35 @@
         <!-- Col 1 - Talaba ma'lumotlari -->
         <div class="col-12 col-md-6">
             <div class="border p-3 rounded">
-                <h4 class='p-2 fs-3 fw-semibold'><i class="bi bi-person-lines-fill"></i> Talaba ma'lumotlari</h4>
-                <ul>
-                    <li><strong>F.I.Sh:</strong> {{ application.application.student.user.full_name }}</li>
-                    <li><strong>Telefon:</strong> {{ application.application.student.user.phone }}</li>
-                    <li><strong>Manzil:</strong> {{ application.application.student.user.address }}</li>
-                    <li><strong>Mutaxassislik:</strong> {{ application.application.student.specialty }}</li>
-                    <li><strong>Guruh:</strong> {{ application.application.student.group }}</li>
-                    <li><strong>GPA:</strong> {{ application.application.student.gpa }}</li>
-                    <li><strong>Talaba holati:</strong> {{ application.application.student.studentStatus }}</li>
-                    <li><strong>O‘quv formati:</strong> {{ application.application.student.educationForm }}</li>
-                    <li><strong>Bosqich:</strong> {{ application.application.student.level }}</li>
-                    <li><strong>Semestr:</strong> {{ application.application.student.semester }}</li>
-                    <li><strong>Hudud:</strong> {{ application.application.student.localityType }}</li>
-                </ul>
+                <h4 class="p-3 fs-4 fw-bold border-bottom mb-3 text-primary ">
+                <i class="bi bi-person-lines-fill"></i> Talaba ma'lumotlari</h4>
 
-                <h4>📄 Ariza holati</h4>
-                <p><strong>Holat:</strong> {{ application.application.get_application_status_display }}</p>
-                <p><strong>Yaratilgan sana:</strong> {{ application.application.created_at }}</p>
+                <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <div class="row gy-3">
+                    <div class="col-md-6">
+                        <p><strong>F.I.Sh:</strong> {{ application.application.student.user.full_name }}</p>
+                        <p><strong>Telefon:</strong> {{ application.application.student.user.phone }}</p>
+                        <p><strong>Mutaxassislik:</strong> {{ application.application.student.specialty }}</p>
+                        <p><strong>Guruh:</strong> {{ application.application.student.group }}</p>
+                        <p><strong>GPA:</strong> {{ application.application.student.gpa }}</p>
+                        <p><strong>Talaba holati:</strong> {{ application.application.student.studentStatus }}</p>
+                        <p><strong>O‘quv formati:</strong> {{ application.application.student.educationForm }}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <img class="img-thumbnail" width=150 src="{{ application.application.student.image.url }}" alt="Talaba rasmi">
+                        <p><strong>Bosqich:</strong> {{ application.application.student.level }}</p>
+                        <p><strong>Semestr:</strong> {{ application.application.student.semester }}</p>
+                        <p><strong>Manzil:</strong> {{ application.application.student.user.address }}</p>
+                        <p><strong>Hudud:</strong> {{ application.application.student.localityType }}</p>
+                    </div>
+                    </div>
+                    <h4 class="text-primary ">📄 Ariza holati</h4>
+                                <p><strong>Holat:</strong> {{ application.application.get_application_status_display }}</p>
+                                <p><strong>Yaratilgan sana:</strong> {{ application.application.created_at }}</p>
 
-                {% if request.user.role == 'special' %}
-                    <h4>🎓 Trening bali</h4>
-                    <p><strong>Ball:</strong> {{ application.ball_training.field }}</p>
-                    
-                    <h4>🧠 Ma’naviyat ballari</h4>
-                    <ul>
-                        <li>Field 1: {{ application.ball_spirituality.field1 }}</li>
-                        <li>Field 2: {{ application.ball_spirituality.field2 }}</li>
-                        <li>Field 3: {{ application.ball_spirituality.field3 }}</li>
-                        <li>Field 4: {{ application.ball_spirituality.field4 }}</li>
-                        <li>Field 5: {{ application.ball_spirituality.field5 }}</li>
-                        <li>Field 6: {{ application.ball_spirituality.field6 }}</li>
-                        <li>Field 7: {{ application.ball_spirituality.field7 }}</li>
-                        <li>Field 8: {{ application.ball_spirituality.field8 }}</li>
-                        <li>Field 9: {{ application.ball_spirituality.field9 }}</li>
-                        <li>Field 10: {{ application.ball_spirituality.field10 }}</li>
-                    </ul>
-                {% endif %}
+                </div>
+            </div>
             </div>
         </div>
 
@@ -58,13 +50,101 @@
         {% if request.user.role != 'student' %}
         <div class="col-12 col-md-6">
             <div class="border border p-3 rounded">
-                <h4 class='p-5'>Ma'lumotlarni yangilash</h4>
+                {% if request.user.role == 'special' %}
+                    <h4 class="text-primary">Trening bali</h4>
+                    <div class="list-group ">
+                        <div class="list-group-item d-flex justify-content-between align-items-center">
+                                Ball:
+                                <span class="badge my-btn-color rounded-pill">{{ application.ball_training.field }}</span>
+                        </div>
+                    </div>
+                
+                    <h4 class="text-primary mt-3">Ma’naviyat ballari</h4>
+                    <div class="list-group ">
+                        {% for item in fields %}
+                            <div class="list-group-item d-flex justify-content-between align-items-center">
+                            {{ item.label }}
+                            <span class="badge my-btn-color rounded-pill">{{ item.value }}</span>
+                            </div>
+                        {% endfor %}
+                        <div class="list-group-item d-flex justify-content-between align-items-center bg-light fw-bold">
+                            Jami ball:
+                            <span class="badge bg-primary fs-5 rounded-pill">{{ application.total_ball }}</span>
+                        </div>
+                    </div>
+
+                    <h4 class="p-4 fs-4 fw-semibold text-primary border-bottom mb-4">
+                        <i class="bi bi-pencil-square"></i> Ma'lumotlarni yangilash
+                    </h4>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="row align-items-center mb-3">
+                            <div class="col-5">
+                                <label for="statusDropdown" class="form-label fw-medium">Ariza holati</label>
+                                <div class="dropdown my-text mb-0">
+                                    <button class="btn btn-outline-primary dropdown-toggle w-100" type="button" id="statusDropdown"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        <span id="statusDropdownLabel">{{ selected_status_display|default:application.application.get_application_status_display }}</span>
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="statusDropdown">
+                                        {% for value, label in choices %}
+                                            <li>
+                                                <a class="dropdown-item" href="javascript:void(0)" onclick="selectStatus('{{ value }}', '{{ label }}'); event.preventDefault();">
+                                                    {{ label }}
+                                                </a>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <button type="submit" class="btn btn-primary w-100"><i class="bi bi-save"></i> Saqlash</button>
+                            </div>
+                        </div>
+                        <input type="hidden" name="application_status" id="applicationStatusInput" value="{{ selected_status }}">
+                    </form>
+                {% endif %}
+
+                {% if request.user.role in 'training spirituality' %}
+                    <h4 class="p-4 fs-4 fw-semibold text-primary border-bottom mb-4">
+                        <i class="bi bi-pencil-square"></i> Ma'lumotlarni yangilash
+                    </h4>
+                    <form method="post" class="row g-3">
+                        {% csrf_token %}
+                        {% for field in form %}
+                            <div class="col-md-6">
+                                <div class="form-group mb-2">
+                                    <label for="{{ field.id_for_label }}" class="form-label fw-medium">{{ field.label }}</label>
+                                    {{ field }}
+                                    {% if field.errors %}
+                                        <div class="text-danger small">{{ field.errors }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endfor %}
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary px-4 py-2">
+                                <i class="bi bi-save"></i> Saqlash
+                            </button>
+                        </div>
+                    </form>
+                {% endif %}
+
+
+
+                
+
+
+
+
+
+                {% comment %} <h4 class='p-5'>Ma'lumotlarni yangilash</h4>
                 <form method="post">
                     {% csrf_token %}
                     {{ form.as_p }}
 
-                    <button type="submit" class="ms-1 btn-get-started">Saqlash</button>
-                </form>
+                    <button type="submit" class="btn btn-sm my-btn-color">Saqlash</button>
+                </form> {% endcomment %}
             </div>
         </div>
         {% endif %}
