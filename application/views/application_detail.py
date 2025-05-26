@@ -19,15 +19,6 @@ class ApplicationDetailView(View):
         user = request.user
         ball = get_object_or_404(BallApplication, pk=pk)
 
-        fields = []
-        spirituality = ball.ball_spirituality
-        for field in spirituality._meta.fields:
-            if field.name.startswith("field"):
-                fields.append({
-                    "label": field.verbose_name,
-                    "value": getattr(spirituality, field.name)
-                })
-
         if user.role == 'student' and ball.application.student != user.profile:
             messages.info(request, "Sizga ruxsat berilmagan!")
             return redirect('main:index')
@@ -41,7 +32,6 @@ class ApplicationDetailView(View):
             form = SpecialForm(instance=app_obj)
             selected_status = request.POST.get('application_status')
             selected_status_display = dict(SpecialForm().fields['application_status'].choices).get(selected_status)
-
             choices = form.fields['application_status'].choices
         else:
             return render(request, 'application/detail.html', {
@@ -50,7 +40,7 @@ class ApplicationDetailView(View):
 
 
         return render(request, 'application/detail.html', {
-            'application': ball, 'form': form, 'fields': fields, 'choices': choices if 'choices' in locals() else None
+            'application': ball, 'form': form, 'choices': choices if 'choices' in locals() else None
         })
 
     def post(self, request, pk):

@@ -5,8 +5,7 @@
 {% block content %}
 <div class="container mt-4">
     <div>
-        <h2 class="mb-3">Arizalar Ro'yxati</h2>
-            <!-- Bootstrap Dropdown -->
+        <h2 class="mb-3">Arizalar Ro'yxati</h2>            
             <div class="dropdown my-text d-inline-block">
                 <button class="btn btn-getstarted fs-5 border dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                     {% if request.GET.training == "none" or request.GET.ball_spirituality == "none" %}
@@ -26,11 +25,13 @@
                         <li><a class="dropdown-item my-text" href="?ball_spirituality=none">Yangi kelgan arizalar</a></li>
                         <li><a class="dropdown-item my-text" href="?ball_spirituality=exists">Baholangan arizalar</a></li>
                     {% elif request.user.role == "special" %}
-                        <li><a class="dropdown-item my-text" href="#">Yangi kelgan arizalar</a></li>
-                        <li><a class="dropdown-item my-text" href="#">Baholangan arizalar</a></li>
+                        <li><a class="dropdown-item my-text" href="?application_status=new">Yangi kelgan arizalar</a></li>
+                        <li><a class="dropdown-item my-text" href="?application_status=approved">Tasdiqlangan arizalar</a></li>
+                        <li><a class="dropdown-item my-text" href="?application_status=rejected">Rad etilgan arizalar</a></li>
                     {% endif %}
                 </ul>
             </div>
+
             {% if request.user.role == "spirituality" %}
                 <p class="text-success">Ijtimoiy faollikni aniqlash bo'yicha komissiya</p>
             {% elif request.user.role == "training" %}
@@ -40,10 +41,7 @@
             {% elif request.user.role == "special" %}
                 <p class="text-warning">Maxsus komissiya</p>
             {% endif %}
-
     </div>
-
-
     <table class="table table-bordered table-hover mt-3">
         <thead class="thead-light">
             <tr class="text-center">
@@ -87,7 +85,7 @@
                 </tr>
             {% empty %}
                 <tr>
-                    <td colspan="5" class="text-center">Hozircha hech qanday ariza yo'q.</td>
+                    <td colspan="5" class="text-center m-5">Hozircha hech qanday ariza yo'q.</td>
                 </tr>
             {% endfor %}
         </tbody>

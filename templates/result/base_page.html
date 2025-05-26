@@ -81,7 +81,7 @@
                   {{request.user.full_name}}
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <li><a class="dropdown-item" href="#">Profil</a></li>
+                  {% comment %} <li><a class="dropdown-item" href="#">Profil</a></li> {% endcomment %}
                   <li><a class="dropdown-item" href="{% url 'application:list' %}">Arizalar</a></li>
                   <li><hr class="dropdown-divider"></li>
                   <li>
@@ -149,31 +149,31 @@
         <div class="col-lg-2 col-md-3 footer-links">
           <h4>Foydali havolalar</h4>
           <ul>
-            <li><i class="bi bi-chevron-right"></i> <a href="#">Bizning Universitet</a></li>
-            <li><i class="bi bi-chevron-right"></i> <a href="#">Biz haqimizda</a></li>
-            <li><i class="bi bi-chevron-right"></i> <a href="#">Xizmatlar</a></li>
-            <li><i class="bi bi-chevron-right"></i> <a href="#">Tuzilma</a></li>
+            <li><i class="bi bi-chevron-right"></i> <a href="https://uzgeouniver.uz/uz/">Bizning Universitet</a></li>
+            <li><i class="bi bi-chevron-right"></i> <a href="https://uzgeouniver.uz/uz/pages/uni-haqida">Biz haqimizda</a></li>
+            <li><i class="bi bi-chevron-right"></i> <a href="https://uzgeouniver.uz/uz//">Xizmatlar</a></li>
+            <li><i class="bi bi-chevron-right"></i> <a href="https://uzgeouniver.uz/uz//">Tuzilma</a></li>
           </ul>
         </div>
 
         <div class="col-lg-2 col-md-3 footer-links">
-          <h4>Our Services</h4>
+          <h4>Interaktiv xizmatlar</h4>
           <ul>
-            <li><i class="bi bi-chevron-right"></i> <a href="#">Web Design</a></li>
-            <li><i class="bi bi-chevron-right"></i> <a href="#">Web Development</a></li>
-            <li><i class="bi bi-chevron-right"></i> <a href="#">Product Management</a></li>
-            <li><i class="bi bi-chevron-right"></i> <a href="#">Marketing</a></li>
+            <li><i class="bi bi-chevron-right"></i> <a href="#">Elektron kutubxona</a></li>
+            <li><i class="bi bi-chevron-right"></i> <a href="https://murojaat.uzgeouniver.uz/">Virtual qabul</a></li>
+            <li><i class="bi bi-chevron-right"></i> <a href="https://vacancy.uzgeouniver.uz/uz/">Vakansiyalar</a></li>
+            <li><i class="bi bi-chevron-right"></i> <a href="https://pf.bimm.uz/">Portfolio</a></li>
           </ul>
         </div>
 
         <div class="col-lg-4 col-md-12">
-          <h4>Follow Us</h4>
-          <p>Cras fermentum odio eu feugiat lide par naso tierra videa magna derita valies</p>
+          <h4>Bizning ijtimoiy tarmoqlar</h4>
+          
           <div class="social-links d-flex">
-            <a href=""><i class="bi bi-twitter-x"></i></a>
-            <a href=""><i class="bi bi-facebook"></i></a>
-            <a href=""><i class="bi bi-instagram"></i></a>
-            <a href=""><i class="bi bi-linkedin"></i></a>
+            <a href="https://www.youtube.com/channel/UCHbNGfH1JzavP51xMmNN_eQ?view_as=subscriber"><i class="bi bi-youtube"></i></a>
+            <a href="https://www.facebook.com/geoscience.official"><i class="bi bi-facebook"></i></a>
+            <a href="https://www.instagram.com/geologiya_fanlari_universitet/"><i class="bi bi-instagram"></i></a>
+            <a href="https://t.me/gfu_rasmiy_kanali"><i class="bi bi-telegram"></i></a>
           </div>
         </div>
 
@@ -181,17 +181,11 @@
     </div>
 
     <div class="container copyright text-center mt-4">
-      <p>© <span>Copyright</span> <strong class="px-1 sitename">GFU</strong> <span>All Rights Reserved</span></p>
-      <div class="credits">
-        <!-- All the links in the footer should remain intact. -->
-        <!-- You can delete the links only if you've purchased the pro version. -->
-        <!-- Licensing information: https://bootstrapmade.com/license/ -->
-        <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
-        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> Distributed by <a href="https://themewagon.com">ThemeWagon
-      </a></div><a href="https://themewagon.com">
-    </a></div><a href="https://themewagon.com">
-
-  </a></footer><a href="https://themewagon.com">
+      <p>© <span>Copyright</span> <strong class="px-1 sitename">GFU</strong> <span>Raqamli ta'lim texnologiyalari markazi</span></p>
+      
+  </footer>
+  
+  <a href="#">
 
   <!-- Scroll Top -->
   </a><a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
@@ -222,10 +216,5 @@
         // dropdown tugmasi matnini o'zgartirish
         document.getElementById('statusDropdown').textContent = label;
     }
-
     </script>
-
-
-
-
 </body></html>

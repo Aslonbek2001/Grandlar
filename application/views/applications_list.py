@@ -11,6 +11,12 @@ class ApplicationListView(ListView):
         queryset = BallApplication.objects.all()
         training_filter = self.request.GET.get('training', None)
         spirituality_filter = self.request.GET.get('ball_spirituality', None)
+        status_filter = self.request.GET.get('application_status', None)
+
+        if user.role == 'special' or  user.is_superuser:
+            if status_filter:
+                queryset = queryset.filter(application__application_status=status_filter)
+                return queryset
 
         if user.role == 'student':
             return queryset.filter(application__student=user.profile)
@@ -20,7 +26,6 @@ class ApplicationListView(ListView):
                 queryset = queryset.filter(ball_training__isnull=False)
             elif training_filter == 'none':
                 queryset = queryset.filter(ball_training__isnull=True)
-            
             return queryset
         
         elif user.role == 'spirituality':
@@ -28,7 +33,6 @@ class ApplicationListView(ListView):
                 queryset = queryset.filter(ball_spirituality__isnull=False)
             elif spirituality_filter == 'none':
                 queryset = queryset.filter(ball_spirituality__isnull=True)
-            
             return queryset
 
         elif user.role == 'special':
