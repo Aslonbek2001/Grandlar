@@ -3,35 +3,130 @@
 {% block title %}Arizalar Ro'yxati{% endblock %}
 
 {% block content %}
-<div class="container mt-4">
+<div class="container m-4">
     <div>
-        <h2 class="mb-3">Arizalar Ro'yxati</h2>            
-            <div class="dropdown my-text d-inline-block">
-                <button class="btn btn-getstarted fs-5 border dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                    {% if request.GET.training == "none" or request.GET.ball_spirituality == "none" %}
-                        Yangi kelgan arizalar
-                    {% elif request.GET.training == "exists" or request.GET.ball_spirituality == "exists" %}
-                        Baholangan arizalar
+        <h2 class="h2">Arizalar Ro'yxati</h2>
+        <div class="btn-group my-text" role="group" aria-label="Application status filters">
+            {% if request.user.role == "training" %}
+            <a href="?training=none"
+                class="btn"
+                style="
+                    border: 1px solid #06b6d4;
+                    {% if request.GET.training == 'none' %}
+                        background-color: #06b6d4;
+                        color: white;
                     {% else %}
-                        Ariza holatini tanlang
+                        color: #06b6d4;
                     {% endif %}
-                </button>
+                ">
+                Yangi kelgan arizalar
+            </a>
 
-                <ul class="dropdown-menu my-text" aria-labelledby="dropdownMenuButton">
-                    {% if request.user.role == "training" %}
-                        <li><a class="dropdown-item my-text" href="?training=none">Yangi kelgan arizalar</a></li>
-                        <li><a class="dropdown-item my-text" href="?training=exists">Baholangan arizalar</a></li>
-                    {% elif request.user.role == "spirituality" %}
-                        <li><a class="dropdown-item my-text" href="?ball_spirituality=none">Yangi kelgan arizalar</a></li>
-                        <li><a class="dropdown-item my-text" href="?ball_spirituality=exists">Baholangan arizalar</a></li>
-                    {% elif request.user.role == "special" %}
-                        <li><a class="dropdown-item my-text" href="?application_status=new">Yangi kelgan arizalar</a></li>
-                        <li><a class="dropdown-item my-text" href="?application_status=approved">Tasdiqlangan arizalar</a></li>
-                        <li><a class="dropdown-item my-text" href="?application_status=rejected">Rad etilgan arizalar</a></li>
+            <a href="?training=exists"
+                class="btn"
+                style="
+                    border: 1px solid #0f766e;
+                    {% if request.GET.training == 'exists' %}
+                        background-color: #0f766e;
+                        color: white;
+                    {% else %}
+                        color: #0f766e;
                     {% endif %}
-                </ul>
-            </div>
+                ">
+                Baholangan arizalar
+            </a>
 
+            {% elif request.user.role == "spirituality" %}
+                <a href="?ball_spirituality=none" 
+                class="btn"
+                style="
+                    border: 1px solid #06b6d4;  /* blue-500 */
+                    {% if request.GET.ball_spirituality == 'none' %}
+                        background-color: #06b6d4;
+                        color: white;
+                    {% else %}
+                        color: #06b6d4;
+                    {% endif %}
+                ">
+                Yangi kelgan arizalar
+                </a>
+
+                <a href="?ball_spirituality=exists" 
+                class="btn"
+                style="
+                    border: 1px solid #10b981;  /* green-500 */
+                    {% if request.GET.ball_spirituality == 'exists' %}
+                        background-color: #10b981;
+                        color: white;
+                    {% else %}
+                        color: #10b981;
+                    {% endif %}
+                ">
+                Baholangan arizalar
+                </a>
+
+            {% elif request.user.role == "student" %}
+                <a href="?application_status=new" 
+                class="btn btn-outline-primary {% if request.GET.application_status == 'new' %}active{% endif %}">
+                Yangi kelgan arizalar
+                </a>
+                <a href="?application_status=approved" 
+                class="btn btn-outline-primary {% if request.GET.application_status == 'approved' %}active{% endif %}">
+                Tasdiqlangan arizalar
+                </a>
+                <a href="?application_status=rejected" 
+                class="btn btn-outline-primary {% if request.GET.application_status == 'rejected' %}active{% endif %}">
+                Rad etilgan arizalar
+                </a>
+
+
+            {% elif request.user.role == "special" %}
+                <a href="?application_status=new" 
+                class="btn"
+                style="
+                    border: 1px solid #3b82f6;  /* blue-500 */
+                    {% if request.GET.application_status == 'new' %}
+                        background-color: #3b82f6;
+                        color: white;
+                    {% else %}
+                        color: #3b82f6;
+                    {% endif %}
+                ">
+                Yangi kelgan arizalar
+                </a>
+
+                <a href="?application_status=approved" 
+                class="btn"
+                style="
+                    border: 1px solid #10b981;  /* green-500 */
+                    {% if request.GET.application_status == 'approved' %}
+                        background-color: #10b981;
+                        color: white;
+                    {% else %}
+                        color: #10b981;
+                    {% endif %}
+                ">
+                Tasdiqlangan arizalar
+                </a>
+
+                <a href="?application_status=rejected" 
+                class="btn"
+                style="
+                    border: 1px solid #ef4444;  /* red-500 */
+                    {% if request.GET.application_status == 'rejected' %}
+                        background-color: #ef4444;
+                        color: white;
+                    {% else %}
+                        color: #ef4444;
+                    {% endif %}
+                ">
+                Rad etilgan arizalar
+                </a>
+
+            {% endif %}
+        </div>
+
+        <div class="m-2">
             {% if request.user.role == "spirituality" %}
                 <p class="text-success">Ijtimoiy faollikni aniqlash bo'yicha komissiya</p>
             {% elif request.user.role == "training" %}
@@ -41,8 +136,9 @@
             {% elif request.user.role == "special" %}
                 <p class="text-warning">Maxsus komissiya</p>
             {% endif %}
+        </div>
     </div>
-    <table class="table table-bordered table-hover mt-3">
+    <table class="table table-bordered table-hover mt-3 mb-5">
         <thead class="thead-light">
             <tr class="text-center">
                 <th>#</th>
@@ -67,7 +163,7 @@
                     {% elif request.user.role == 'spirituality' %}
                         <td class="text-center">{{ app.ball_spirituality.total }}</td>
                     {% elif request.user.role == 'special' %}
-                        <td class="text-center">M: {{ app.ball_spirituality.total }} T: {{ app.ball_training.field }} Umumiy: {{app.total_ball }}</td>
+                        <td class="text-center">Umumiy bal: {{ app.total_ball }}</td>
                     {% endif %}
                     <td class="text-center">{{ app.application.created_at|date:"Y-m-d H:i" }}</td>
                     <td class="text-center">
@@ -85,10 +181,16 @@
                 </tr>
             {% empty %}
                 <tr>
-                    <td colspan="5" class="text-center m-5">Hozircha hech qanday ariza yo'q.</td>
+                    <td colspan="5" class="text-center p-5">Hozircha hech qanday ariza yo'q.</td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
 </div>
+{% endblock %}
+
+
+{% block scripts %}
+
+    
 {% endblock %}

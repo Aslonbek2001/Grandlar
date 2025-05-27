@@ -46,10 +46,5 @@ class User(AbstractUser):
 
     objects = CustomUserManager()
 
-    def save(self, *args, **kwargs):
-        if self.pk is None or not self.password.startswith('pbkdf2'):
-            self.set_password(self.password)
-        super().save(*args, **kwargs)
-
     def __str__(self):
         return self.full_name

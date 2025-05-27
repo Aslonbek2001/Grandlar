@@ -22,6 +22,10 @@
   <link href="{% static 'proj/css/glightbox.min.css' %}" rel="stylesheet">
   <link href="{% static 'proj/css/swiper-bundle.min.css' %}" rel="stylesheet">
 
+  <link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
   <!-- Main CSS File -->
   <link href="{% static 'proj/css/main.css' %}" rel="stylesheet">
 
@@ -110,11 +114,13 @@
   <main>
     {% if messages %}
       <div aria-live="polite" aria-atomic="true" class="position-relative">
-        <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 1055;">
+        <div class="toast-container position-fixed bottom-0 end-0 p-4 m-5" style="z-index: 1055;">
           {% for message in messages %}
-            <div class="toast align-items-center text-white bg-{{ message.tags }} border-0 show" role="alert">
+            <div class="toast align-items-center text-white bg-{{ message.tags }} border-0 fade"
+                role="alert" aria-live="assertive" aria-atomic="true"
+                data-bs-delay="3000" data-bs-autohide="true">
               <div class="d-flex">
-                <div class="toast-body">
+                <div class="toast-body mt-1 mb-1">
                   {{ message }}
                 </div>
                 <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
@@ -123,7 +129,18 @@
           {% endfor %}
         </div>
       </div>
+      <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          const toastElList = [].slice.call(document.querySelectorAll('.toast'))
+          toastElList.forEach(function (toastEl) {
+            const toast = new bootstrap.Toast(toastEl)
+            toast.show()
+          })
+        });
+      </script>
     {% endif %}
+
+
     {% block content %}
     {% endblock %}
   </main>
@@ -139,7 +156,7 @@
             <span class="sitename">GFU</span>
           </a>
           <div class="footer-contact pt-3">
-            <p>Toshkent sh. Mirzo Ulug'bek tumani, </p>
+            <p><strong>Manzil:</strong> Toshkent sh. Mirzo Ulug'bek tumani, </p>
             <p>Olimlar ko'chasi, 64-uy</p>
             <p class="mt-3"><strong>Telefon raqam:</strong> <span>+1 5589 55488 55</span></p>
             <p><strong>Email:</strong> <span>info@uzgeouniver.uz</span></p>
@@ -205,16 +222,12 @@
 
   <!-- Main JS File -->
   <script src="{% static 'proj/js/main.js' %}"></script>
-  <script>
-    document.getElementById("dropdownBtn").addEventListener("click", function() {
-        const menu = document.getElementById("dropdownMenu");
-        menu.classList.toggle("hidden");
-    });
-    function selectStatus(value, label) {
-        // statusni o'rnatish
-        document.getElementById('applicationStatusInput').value = value;
-        // dropdown tugmasi matnini o'zgartirish
-        document.getElementById('statusDropdown').textContent = label;
-    }
-    </script>
+  <!-- Bootstrap JS (CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+{% block scripts %}
+
+{% endblock %}
+  
+
 </body></html>
