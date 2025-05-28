@@ -23,10 +23,5 @@ class SignInWithHemis(View):
             resource_owner_url=RESOURCE_OWNER_URL,
         )
         auth_url = client.get_authorization_url()
-
-        print("#" * 50)
-        print("Auth URL: ", auth_url)
-        print("#" * 50)
-
         return redirect(auth_url)
     

@@ -34,26 +34,19 @@ class ApplicationCreateView(View):
         student = user.profile
         date = timezone.now().date() 
         
-        print("\n  Hozirgi yil:", date.year)
 
         valid_window = YearlyApplicationWindow.objects.filter(year=date.year).first()
         if valid_window:
-            print("\n\n")
-            print("GPA: Tekshiruvi")
             if student.gpa < valid_window.min_gpa:
-                print("Talabaning GPA:", student.gpa, "Minimal GPA:", valid_window.min_gpa)
                 messages.info(request, "Sizning GPA talablarga javob bermaydi.")
                 return redirect('main:index') 
             
-            print("Vaqt tekshiruvi")
+
             if date < valid_window.start_date or date > valid_window.end_date:
-                print("Hozirgi sana:", date, "Boshlanish sanasi:", valid_window.start_date, "Tugash sanasi:", valid_window.end_date)
                 messages.info(request, "Ariza topshirish muddati tugagan.")
                 return redirect('main:index')
             
-            print("Kurs tekshiruvi: ", get_course(student.level, valid_window.course))
             if not get_course(student.level, valid_window.course):
-                print("Talabaning kursi:", student.level, "Ariza oynasi kursi:", valid_window.course)
                 messages.info(request, "Sizning kursingiz ushbu ariza oynasiga mos kelmaydi.")
                 return redirect('main:index')
             
@@ -63,7 +56,6 @@ class ApplicationCreateView(View):
         
         new_application = Application.objects.create(student=student, application_status=ApplicationStatus.NEW)
         ball_application = BallApplication.objects.create(application=new_application)
-        print("Bal xam saqlandi.", ball_application.id)
         messages.success(request, "Ariza muvofaqiyatli yuborildi")
         return redirect('main:index') 
     

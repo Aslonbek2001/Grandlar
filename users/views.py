@@ -6,13 +6,8 @@ def custom_login_view(request):
     if request.method == "POST":
         full_name = request.POST['full_name']
         password = request.POST['password']
-        print(f"Attempting login for user: {full_name}")
-        print(f"Password provided: {password}")
-
 
         user = authenticate(request, username=full_name, password=password)
-
-        print(f"Authentication result: {user}")
 
         if user is not None:
             login(request, user)
