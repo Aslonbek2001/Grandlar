@@ -89,33 +89,75 @@
                     <h4 class="p-4 fs-4 fw-semibold text-primary border-bottom mb-4">
                         <i class="bi bi-pencil-square"></i> Ma'lumotlarni yangilash
                     </h4>
-                    <form method="post">
+                    <form id="status-form" method="POST">
                         {% csrf_token %}
-                        <div class="row align-items-center mb-3">
-                            <label for="statusDropdown" class="form-label fw-medium">Ariza holati</label>
-                            <div class="col-5">
-                                <div class="dropdown my-text mb-0">
-                                    <button class="btn btn-outline-primary dropdown-toggle w-100" type="button" id="statusDropdown"
-                                        data-bs-toggle="dropdown" aria-expanded="false">
-                                        <span id="statusDropdownLabel">{{ selected_status_display|default:application.application.get_application_status_display }}</span>
-                                    </button>
-                                    <ul class="dropdown-menu" aria-labelledby="statusDropdown">
-                                        {% for value, label in choices %}
-                                            <li>
-                                                <a class="dropdown-item" href="javascript:void(0)" onclick="selectStatus('{{ value }}', '{{ label }}'); event.preventDefault();">
-                                                    {{ label }}
-                                                </a>
-                                            </li>
-                                        {% endfor %}
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <button type="submit" class="btn btn-primary w-100"><i class="bi bi-save"></i> Saqlash</button>
+                        <div class="status-options ">
+                            <label class="radio-wrapper yangi">
+                                <input type="radio" name="application_status" value="new">
+                                <span class="checkmark"></span>
+                                Yangi
+                            </label>
+
+                            <label class="radio-wrapper tasdiq">
+                                <input type="radio" name="application_status" value="approved">
+                                <span class="checkmark"></span>
+                                Tasdiqlash
+                            </label>
+
+                            <label class="radio-wrapper rad">
+                                <input type="radio" name="application_status" value="rejected">
+                                <span class="checkmark"></span>
+                                Rad etish
+                            </label>
+                        </div>
+                        <div class="d-grid me-5 ms-5 mt-5">
+                            <button type="submit" class="btn btn-primary" id="submit-btn">Yuborish</button>
+                        </div>
+                    </form>
+
+                    {% comment %} <script>
+                        document.getElementById('submit-btn').addEventListener('click', function () {
+                        const radios = document.querySelectorAll('input[name="status"]');
+                        let selectedValue = null;
+
+                        radios.forEach((radio) => {
+                            if (radio.checked) {
+                            selectedValue = radio.value;
+                            }
+                        });
+
+                        if (selectedValue) {
+                            alert("Tanlangan holat: " + selectedValue);
+                            // Bu yerga submit qilish yoki AJAX bilan yuborish qo‘shishingiz mumkin
+                        } else {
+                            alert("Iltimos, holatni tanlang.");
+                        }
+                        });
+                    </script> {% endcomment %}
+
+                    {% comment %} <form method="post">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label class="form-label fw-medium">Ariza holati</label>
+                            <div>
+                                {% for value, label in choices %}
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" 
+                                            name="application_status" 
+                                            id="status_{{ forloop.counter }}" 
+                                            value="{{ value }}"
+                                            {% if selected_status == value %}checked{% endif %}>
+                                        <label class="form-check-label" for="status_{{ forloop.counter }}">
+                                            {{ label }}
+                                        </label>
+                                    </div>
+                                {% endfor %}
                             </div>
                         </div>
-                        <input type="hidden" name="application_status" id="applicationStatusInput" value="{{ selected_status }}">
-                    </form>
+                        <button type="submit" class="btn btn-primary w-100">
+                            <i class="bi bi-save"></i> Saqlash
+                        </button>
+                    </form> {% endcomment %}
                 {% endif %}
 
                 {% if request.user.role in 'training spirituality' %}
@@ -149,6 +191,3 @@
 </div>
 {% endblock %}
 
-{% block scripts %}
-
-{% endblock %}

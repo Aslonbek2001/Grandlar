@@ -27,14 +27,13 @@ class Application(models.Model):
         return f"{self.student.user.full_name} - {self.application_status}"
     
     def approve(self):
-        self.application_status != ApplicationStatus.APPROVED
         self.application_status = ApplicationStatus.APPROVED
         self.save()
 
     def reject(self):
-        self.application_status != ApplicationStatus.REJECTED
         self.application_status = ApplicationStatus.REJECTED
         self.save()
+
     
     
     class Meta:
@@ -96,5 +95,18 @@ class BallApplication(models.Model):
 
 
 
+class YearlyApplicationWindow(models.Model):
+    year = models.IntegerField()
+    course = models.IntegerField(help_text="Nechanchi kurslar uchun ochilgan (1, 2, ...)")
+    min_gpa = models.DecimalField(
+        max_digits=3, decimal_places=1, default=3.5,
+        validators=[MinValueValidator(0), MaxValueValidator(5)],
+        help_text="Talabaning minimal GPA balli (0.0 - 5.0)",
+        verbose_name="Minimal GPA"
+    )
+    start_date = models.DateField()
+    end_date = models.DateField()
 
+    def __str__(self):
+        return f"{self.year} yil uchun {self.course}-kurs ariza oynasi"
 

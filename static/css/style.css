@@ -1,85 +1,64 @@
-.alert-container {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  z-index: 1055;
+.status-options {
+  justify-content: center; 
   display: flex;
-  flex-direction: column;
-  gap: 15px;
-  width: 350px;
+  gap: 20px;
 }
 
-.custom-alert {
-  display: flex;
-  align-items: center;
-  padding: 15px;
-  border-radius: 6px;
-  border: 1px solid transparent;
-  font-family: Arial, sans-serif;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+.radio-wrapper {
   position: relative;
-}
-
-.custom-alert .icon {
-  font-size: 20px;
-  margin-right: 10px;
-}
-
-.custom-alert .title {
-  font-weight: bold;
-  margin-right: 5px;
-}
-
-.custom-alert .message {
-  flex: 1;
-}
-
-.custom-alert .close-btn {
-  background: none;
-  border: none;
-  font-size: 20px;
-  color: inherit;
+  padding-left: 30px;
   cursor: pointer;
-  margin-left: 10px;
+  user-select: none;
+  font-size: 18px;
+  font-weight: bold;
+
+  display: flex;
+  align-items: center; /* MUHIM: tekislash */
 }
 
-/* Alert Types */
-.alert-info {
-  background-color: #d9edf7;
-  color: #31708f;
-  border-color: #bce8f1;
+/* Ranglar */
+.radio-wrapper.yangi {
+  color: #3498db;
+}
+.radio-wrapper.tasdiq {
+  color: #27ae60;
+}
+.radio-wrapper.rad {
+  color: #e74c3c;
 }
 
-.alert-info .icon::before {
-  content: "ℹ️";
+/* Radio input ni yashirish */
+.radio-wrapper input[type="radio"] {
+  position: absolute;
+  opacity: 0;
 }
 
-.alert-warning {
-  background-color: #fcf8e3;
-  color: #8a6d3b;
-  border-color: #faebcc;
+/* Custom doira (checkmark) */
+.checkmark {
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+  margin-right: 8px;
+  box-sizing: border-box;
+  display: inline-block;
+  position: relative;
+  flex-shrink: 0;
 }
 
-.alert-warning .icon::before {
-  content: "⚠️";
+/* Tanlanganda */
+.radio-wrapper input[type="radio"]:checked + .checkmark {
+  background-color: #2c3e50;
+  border-color: #2c3e50;
 }
 
-.alert-error {
-  background-color: #f2dede;
-  color: #a94442;
-  border-color: #ebccd1;
-}
-
-.alert-error .icon::before {
-  content: "❌";
-}
-
-.alert-success {
-  background-color: #dff0d8;
-  color: #3c763d;
-  border-color: #d6e9c6;
-}
-
-.alert-success .icon::before {
-  content: "✅";
+.radio-wrapper input[type="radio"]:checked + .checkmark::after {
+  content: '';
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #fff;
 }

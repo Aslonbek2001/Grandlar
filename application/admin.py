@@ -1,7 +1,7 @@
 import openpyxl
 from django.http import HttpResponse
 from django.contrib import admin
-from .models import Application, BallApplication, SpiritualityBall, TrainingBall
+from .models import Application, BallApplication, SpiritualityBall, TrainingBall, YearlyApplicationWindow
 
 # class ApplicationAdmin(admin.ModelAdmin):
 #     list_display = ('id', 'student_id', 'student_name', 'student_gpa', 'student_education_direction', 'student_privilege_category', 'student_education_level', 'application_status', 'created_at')
@@ -55,4 +55,5 @@ admin.site.register(Application)
 admin.site.register(BallApplication)
 admin.site.register(TrainingBall)
 admin.site.register(SpiritualityBall)
+admin.site.register(YearlyApplicationWindow)
 

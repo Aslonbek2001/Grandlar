@@ -38,47 +38,32 @@
 
             {% elif request.user.role == "spirituality" %}
                 <a href="?ball_spirituality=none" 
-                class="btn"
-                style="
-                    border: 1px solid #06b6d4;  /* blue-500 */
-                    {% if request.GET.ball_spirituality == 'none' %}
-                        background-color: #06b6d4;
-                        color: white;
-                    {% else %}
-                        color: #06b6d4;
-                    {% endif %}
-                ">
-                Yangi kelgan arizalar
+                    class="btn"
+                    style="
+                        border: 1px solid #06b6d4;  
+                        {% if request.GET.ball_spirituality == 'none' %}
+                            background-color: #06b6d4;
+                            color: white;
+                        {% else %}
+                            color: #06b6d4;
+                        {% endif %}
+                    ">
+                    Yangi kelgan arizalar
                 </a>
 
                 <a href="?ball_spirituality=exists" 
-                class="btn"
-                style="
-                    border: 1px solid #10b981;  /* green-500 */
-                    {% if request.GET.ball_spirituality == 'exists' %}
-                        background-color: #10b981;
-                        color: white;
-                    {% else %}
-                        color: #10b981;
-                    {% endif %}
-                ">
-                Baholangan arizalar
+                    class="btn"
+                    style="
+                        border: 1px solid #10b981;  /* green-500 */
+                        {% if request.GET.ball_spirituality == 'exists' %}
+                            background-color: #10b981;
+                            color: white;
+                        {% else %}
+                            color: #10b981;
+                        {% endif %}
+                    ">
+                    Baholangan arizalar
                 </a>
-
-            {% elif request.user.role == "student" %}
-                <a href="?application_status=new" 
-                class="btn btn-outline-primary {% if request.GET.application_status == 'new' %}active{% endif %}">
-                Yangi kelgan arizalar
-                </a>
-                <a href="?application_status=approved" 
-                class="btn btn-outline-primary {% if request.GET.application_status == 'approved' %}active{% endif %}">
-                Tasdiqlangan arizalar
-                </a>
-                <a href="?application_status=rejected" 
-                class="btn btn-outline-primary {% if request.GET.application_status == 'rejected' %}active{% endif %}">
-                Rad etilgan arizalar
-                </a>
-
 
             {% elif request.user.role == "special" %}
                 <a href="?application_status=new" 
@@ -122,7 +107,6 @@
                 ">
                 Rad etilgan arizalar
                 </a>
-
             {% endif %}
         </div>
 
@@ -166,13 +150,17 @@
                         <td class="text-center">Umumiy bal: {{ app.total_ball }}</td>
                     {% endif %}
                     <td class="text-center">{{ app.application.created_at|date:"Y-m-d H:i" }}</td>
-                    <td class="text-center">
+                    <td class="text-center text-primary">
                         {% if app.application.application_status == 'approved' %}
                             <img src="{% static 'icons/check.png' %}" style="width: 20px;" alt="Tasdiqlangan"></img>
                         {% elif app.application.application_status == 'rejected' %}
                             <img src="{% static 'icons/cross.png' %}" style="width: 20px;" alt="Rad etilgan"></img>
                         {% else %}
-                            <img src="{% static 'icons/bell.png' %}" style="width: 20px;" alt="Yangi kelgan"></img>
+                            {% if request.user.role == 'student' %}
+                                Jarayonda
+                            {% else %}
+                                <img src="{% static 'icons/bell.png' %}" style="width: 20px;" alt="Yangi kelgan"></img>
+                            {% endif %}
                         {% endif %}
                     </td>
                     <td class="text-center">
@@ -187,10 +175,4 @@
         </tbody>
     </table>
 </div>
-{% endblock %}
-
-
-{% block scripts %}
-
-    
 {% endblock %}
