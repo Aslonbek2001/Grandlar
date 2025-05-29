@@ -44,7 +44,11 @@
                                     {% elif application.application.application_status == 'rejected' %}
                                         <span class='text-danger'>Rad etilgan</span>
                                     {% elif application.application.application_status == 'new' %}
-                                        <span class='text-warning'>Yangi kelgan</span>
+                                        {% if request.user.role == 'student' %}
+                                            <span class='text-primary'>Jarayonda</span>
+                                        {% else %}
+                                            <span class='text-warning'>Yangi kelgan</span>
+                                        {% endif %}
                                     {% else %}
                                         <span class='text-secondary'>Noma'lum</span>
                                     {% endif %}
