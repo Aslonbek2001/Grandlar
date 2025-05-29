@@ -109,6 +109,12 @@
                 </a>
             {% endif %}
         </div>
+        <form method="get" action="{% url 'application:export_students_excel' %}">
+            <button type="submit" class="btn btn-success mb-2 mt-2 float-end">
+                <i class="bi bi-file-earmark-excel"></i> Arizalarni yuklab olish
+            </button>
+        </form>
+
 
         <div class="m-2">
             {% if request.user.role == "spirituality" %}
