@@ -1,59 +1,29 @@
-import openpyxl
-from django.http import HttpResponse
 from django.contrib import admin
 from .models import Application, BallApplication, SpiritualityBall, TrainingBall, YearlyApplicationWindow
 
-# class ApplicationAdmin(admin.ModelAdmin):
-#     list_display = ('id', 'student_id', 'student_name', 'student_gpa', 'student_education_direction', 'student_privilege_category', 'student_education_level', 'application_status', 'created_at')
-#     search_fields = ('student_id', 'student_name', 'student_phone', 'student_education_direction', 'student_privilege_category', 'student_education_level')
-#     list_filter = ('student_education_direction', 'student_privilege_category', 'student_education_level')
-#     ordering = ('-id',)
-#     list_display_links = ('student_id', 'student_name')
-#     actions = ['export_as_excel']
 
-#     def export_as_excel(self, request, queryset):
-#         # Excel workbook va sheet yaratish
-#         wb = openpyxl.Workbook()
-#         ws = wb.active
-#         ws.title = "Applications"
+class ApplicationAdmin(admin.ModelAdmin):
+    list_display = ['student', 'application_status', 'created_at']
+    search_fields = ['user__username']
+    list_filter = ['application_status']
 
-#         # Sarlavhalar
-#         headers = [
-#             'ID', 'Student ID', 'Name', 'Phone', 'Address', 'GPA',
-#             "Direction", "Privilege", "Level", "Status", "Created At", "Updated At"
-#         ]
-#         ws.append(headers)
 
-#         # Ma'lumotlar
-#         for obj in queryset:
-#             ws.append([
-#                 obj.id,
-#                 obj.student_id,
-#                 obj.student_name,
-#                 obj.student_phone,
-#                 obj.student_address,
-#                 float(obj.student_gpa),
-#                 obj.student_education_direction,
-#                 obj.student_privilege_category,
-#                 obj.student_education_level,
-#                 obj.application_status,
-#                 obj.created_at.strftime('%Y-%m-%d %H:%M'),
-#                 obj.updated_at.strftime('%Y-%m-%d %H:%M'),
-#             ])
+class BallApplicationAdmin(admin.ModelAdmin):
+    list_display = ['application', 'ball_spirituality', 'ball_training', 'total_ball']
 
-#         # Javob yuborish
-#         response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-#         response['Content-Disposition'] = 'attachment; filename=applications.xlsx'
-#         wb.save(response)
-#         return response
 
-#     export_as_excel.short_description = "Export selected to Excel"
+class YearlyApplicationWindowAdmin(admin.ModelAdmin):
+    #  Har bir yil uchun ariza topshirish shartlari o'chirilmasligi kerak. 
+    #  Bu arizalarni yil bo'yicha filter qilish uchun kerak.
+    list_display = ['year', 'min_gpa', 'start_date', 'end_date']
+    search_fields = ['start_date', 'end_date']
 
-# admin.site.register(Application, ApplicationAdmin)
+admin.site.register(Application, ApplicationAdmin)
+admin.site.register(BallApplication, BallApplicationAdmin)
+admin.site.register(YearlyApplicationWindow, YearlyApplicationWindowAdmin)
 
-admin.site.register(Application)
-admin.site.register(BallApplication)
-admin.site.register(TrainingBall)
 admin.site.register(SpiritualityBall)
-admin.site.register(YearlyApplicationWindow)
+admin.site.register(TrainingBall)
+
+
 

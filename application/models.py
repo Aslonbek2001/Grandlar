@@ -24,7 +24,7 @@ class Application(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"{self.student.user.full_name} - {self.application_status}"
+        return f"{self.student.user.full_name}"
     
     def approve(self):
         self.application_status = ApplicationStatus.APPROVED
@@ -37,8 +37,8 @@ class Application(models.Model):
     
     
     class Meta:
-        verbose_name = 'Application'
-        verbose_name_plural = 'Applications'
+        verbose_name = 'Ariza'
+        verbose_name_plural = 'Arizalar'
         ordering = ['-created_at']
         indexes = [
             models.Index(fields=['application_status']),
@@ -58,6 +58,7 @@ class SpiritualityBall(models.Model):
     field9 = models.DecimalField(max_digits=3, decimal_places=1, default=0.0, validators=[ MinValueValidator(0), MaxValueValidator(5)], verbose_name="Teatr va muzey, xiyobon, kino, tarixiy qadamjolarga tashriflar (0-5)")
     field10 = models.DecimalField(max_digits=3, decimal_places=1, default=0.0, validators=[ MinValueValidator(0), MaxValueValidator(5)], verbose_name="Talabalarning sport bilan shug‘ullanishi va sog‘lom turmush tarziga amal qilishi (0-5)")
 
+
     @property
     def total(self):
         fields = [f'field{i}' for i in range(1, 11)]
@@ -73,11 +74,23 @@ class SpiritualityBall(models.Model):
             fields.append((verbose, value))
         return fields
     
+    def __str__(self):
+        return str(self.total)
+    
+    class Meta:
+        verbose_name = "Ijtimoiy faollik qo'ygan bal"
+        verbose_name_plural = "Ijtimoiy faollik qo'ygan ballar"
 
 
 class TrainingBall(models.Model):
     field = models.DecimalField(max_digits=3, decimal_places=1, default=0.0, verbose_name="Talabaning o'zlshtirish ko'rsatkichi")
 
+    def __str__(self):
+        return str(self.field)
+    
+    class Meta:
+        verbose_name = "Akademik o'zlashtirish bo'yicha ball"
+        verbose_name_plural = "Akademik o'zlashtirish bo'yicha ballar"
 
 class BallApplication(models.Model):
     application = models.OneToOneField(to=Application, on_delete=models.CASCADE, related_name='apps')
@@ -88,11 +101,13 @@ class BallApplication(models.Model):
     def total_ball(self):
         return self.ball_spirituality.total + self.ball_training.field
 
-
-
     def __str__(self):
         return f'{self.application.student.user.full_name}'
 
+    class Meta:
+        verbose_name = "Ariza bo'yicha ball"
+        verbose_name_plural = "Arizalar bo'yicha ballar"
+  
 
 
 class YearlyApplicationWindow(models.Model):
@@ -109,4 +124,8 @@ class YearlyApplicationWindow(models.Model):
 
     def __str__(self):
         return f"{self.year} yil uchun {self.course}-kurs ariza oynasi"
+    
+    class Meta:
+        verbose_name = "Ariza topshirish uchun shart"
+        verbose_name_plural = "Ariza topshirish uchun shartlar"
 
