@@ -20,7 +20,9 @@ class HemisCallbackView(View):
     def get(self, request):
         code = request.GET.get('code')
         if not code:
-            return render(request, 'error.html', {'error': 'Code not found in callback.'})
+            messages.success(request, "Qandaydur xatolik bor! \n ")
+            return redirect('main:index')
+            
 
         client = oAuth2Client(
             client_id=CLIENT_ID,
@@ -35,7 +37,9 @@ class HemisCallbackView(View):
         token_data = client.get_access_token(code)
         access_token = token_data.get('access_token')
         if not access_token:
-            return render(request, 'error.html', {'error': 'Access token not found.'})
+            messages.success(request, "Qandaydur xatolik bor! \n ")
+            return redirect('main:index')
+            # return render(request, 'error.html', {'error': 'Access token not found.'})
 
         user_info = client.get_user_details(access_token)        
         user, student = save_user_and_student(user_info)
