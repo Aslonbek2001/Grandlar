@@ -58,15 +58,39 @@
     .my-text:hover {
       color: #4DC680;
     }
+    @keyframes scroll-left {
+      0% { transform: translateX(100%); }
+      100% { transform: translateX(-100%); }
+    }
+    .test-banner {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background-color: #0EBC69;
+      color: white;
+      font-weight: bold;
+      overflow: hidden;
+      height: 2.5rem;
+      z-index: 1050;
+    }
+    .scrolling-text {
+      display: inline-block;
+      white-space: nowrap;
+      padding-left: 30%;
+      animation: scroll-left 20s linear infinite;
+      font-size: 1rem;
+      line-height: 2.5rem;
   </style>
 
 
 </head>
 
 <body class="index-page">
-
   <header id="header" class="header d-flex align-items-center sticky-top">
-    <div class="container-fluid container-xl position-relative d-flex align-items-center">
+    <div class="test-banner mb-5">
+      <div class="scrolling-text">Sayt test rejimida ishlamoqda. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;—&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Sayt test rejimida ishlamoqda.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; —  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sayt test rejimida ishlamoqda.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;—&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sayt test rejimida ishlamoqda.</div>
+    </div>
+    <div class="container-fluid container-xl position-relative d-flex align-items-center mt-4">
 
       <a href="{% url 'main:index' %}" class="logo d-flex align-items-center me-auto">
         <h1 class="sitename text-warning">GRAND</h1>
