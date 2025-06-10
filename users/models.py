@@ -37,7 +37,7 @@ class User(AbstractUser):
     )
     role = models.CharField(max_length=20, choices=ROLE_CHOICES)
     full_name = models.CharField(verbose_name="To'liq ism sharifi", unique=True, max_length=100)
-    phone = models.CharField(verbose_name="Telefon raqami", max_length=20)
+    phone = models.CharField(verbose_name="Telefon raqami", max_length=50)
     address = models.CharField(verbose_name="Yashash manzili", max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
 
