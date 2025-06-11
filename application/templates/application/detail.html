@@ -96,11 +96,11 @@
                     <form id="status-form" method="POST">
                         {% csrf_token %}
                         <div class="status-options ">
-                            <label class="radio-wrapper yangi">
+                            {% comment %} <label class="radio-wrapper yangi">
                                 <input type="radio" name="application_status" value="new">
                                 <span class="checkmark"></span>
                                 Yangi
-                            </label>
+                            </label> {% endcomment %}
 
                             <label class="radio-wrapper tasdiq">
                                 <input type="radio" name="application_status" value="approved">
