@@ -14,17 +14,18 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'application', # Ariza yuborish uchun
-    'main', # Qo'shimcha Statistika va shunga o'xshash ma'lumotlar uchun
-    'employee', # Xodimlar bilan ishlash agar kerak bo'lsa
-    'student', # Hemis login, data studentlar uchun
+    'application', 
+    'main', 
+    'employee', 
+    'student',
     'users'
 ]
+
 AUTH_USER_MODEL = 'users.User'
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://grand.uzgeouniver.uz",  # https bo‘lishi kerak
-    "http://grand.uzgeouniver.uz",   # agar faqat http bo‘lsa
+    "https://grand.uzgeouniver.uz",  
+    "http://grand.uzgeouniver.uz", 
 ]
 
 CLIENT_ID = 3

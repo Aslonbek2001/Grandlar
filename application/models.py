@@ -57,17 +57,19 @@ class SpiritualityBall(models.Model):
     field8 = models.DecimalField(max_digits=3, decimal_places=1, default=0.0, validators=[ MinValueValidator(0), MaxValueValidator(5)], verbose_name="Volontyorlik va jamoat ishlaridagi faolligi (0-5)")
     field9 = models.DecimalField(max_digits=3, decimal_places=1, default=0.0, validators=[ MinValueValidator(0), MaxValueValidator(5)], verbose_name="Teatr va muzey, xiyobon, kino, tarixiy qadamjolarga tashriflar (0-5)")
     field10 = models.DecimalField(max_digits=3, decimal_places=1, default=0.0, validators=[ MinValueValidator(0), MaxValueValidator(5)], verbose_name="Talabalarning sport bilan shug‘ullanishi va sog‘lom turmush tarziga amal qilishi (0-5)")
+    field11 = models.DecimalField(max_digits=3, decimal_places=1, default=0.0, validators=[ MinValueValidator(0), MaxValueValidator(5)], verbose_name="Manaviy-ma'rifiy sohaga oid boshqa yo'nalishlardagi faoligi (0-5)")
 
 
     @property
     def total(self):
-        fields = [f'field{i}' for i in range(1, 11)]
-        return sum(getattr(self, field) or 0 for field in fields)
+        return sum([self.field1, self.field2, self.field3, self.field4, self.field5, 
+                    self.field6, self.field7, self.field8, self.field9, self.field10, self.field11]) / 5
     
+
     @property
     def list_fields(self):
         fields = []
-        for field_name in ['field1', 'field2', 'field3', 'field4', 'field5', 'field6', 'field7', 'field8', 'field9', 'field10']:
+        for field_name in ['field1', 'field2', 'field3', 'field4', 'field5', 'field6', 'field7', 'field8', 'field9', 'field10', 'field11']:
             field_object = self._meta.get_field(field_name)
             verbose = field_object.verbose_name
             value = getattr(self, field_name)
@@ -99,7 +101,9 @@ class BallApplication(models.Model):
 
     @property
     def total_ball(self):
-        return self.ball_spirituality.total + self.ball_training.field
+        spirituality_score = self.ball_spirituality.total if self.ball_spirituality else 0
+        training_score = self.ball_training.field if self.ball_training else 0
+        return (spirituality_score + training_score)
 
     def __str__(self):
         return f'{self.application.student.user.full_name}'
