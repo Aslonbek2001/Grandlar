@@ -20,6 +20,68 @@ class Application(models.Model):
         default=ApplicationStatus.NEW,
         verbose_name="Ariza holati"
     )
+    
+    academic_performance = models.DecimalField(
+        max_digits=5,
+        decimal_places=2,
+        null=True, blank=True,
+        verbose_name="Akademik o'zlashtirish ko'rsatkichi (GPA*2)",
+        validators=[
+            MinValueValidator(0.00),
+            MaxValueValidator(100.00)
+        ]
+    )
+    reading_culture = models.FileField(
+        upload_to='uploads/', 
+        verbose_name="Kitobxonlik madaniyati", 
+        null=True, blank=True)
+    
+    five_initiatives = models.FileField(
+        upload_to='uploads/',
+        verbose_name='"5 muhim tashabbus" doirasidagi to\'garaklarda faol ishtiroki',
+        null=True, blank=True)
+    
+    manners = models.FileField(
+        upload_to='uploads/',
+        verbose_name="Talabaning oliy ta'lim tashkilotining ichki tartib qoidalari va Odob-axloq kodeksiga rioya etishi (0-5)",
+        null=True, blank=True)
+    
+    participation_in_events = models.FileField(
+        upload_to='uploads/',
+        verbose_name="Xalqaro, respublika, viloyat miqyosidagi ko'rik-tanlov, fan olimpiadalari va sport musobaqalarida erishgan natijalari",
+        null=True, blank=True)
+    
+    attendance = models.FileField(
+        upload_to='uploads/',
+        verbose_name="Talabaning darslarga to'liq va kechikmasdan kelishi (0-5)",
+        null=True, blank=True)
+    
+    enlightenment_classes = models.FileField(
+        upload_to='uploads/',
+        verbose_name='Talabaning "Ma\'rifat darslari"dagi faol ishtiroki',
+        null=True, blank=True)
+    
+    volunteer_work = models.FileField(
+        upload_to='uploads/',
+        verbose_name="Volontyorlik va jamoat ishlaridagi faolligi",
+        null=True, blank=True)
+    
+    cultural_visits = models.FileField(
+        upload_to='uploads/',
+        verbose_name="Teatr va muzey, xiyobon, kino, tarixiy qadamjolarga tashriflar",
+        null=True, blank=True)
+    
+    sports_activity = models.FileField(
+        upload_to='uploads/',
+        verbose_name="Talabalarning sport bilan shug‘ullanishi va sog‘lom turmush tarziga amal qilishi",
+        null=True, blank=True)
+    
+    spiritual_enlightenment = models.FileField(
+        upload_to='uploads/',
+        verbose_name="Ma'naviy-ma'rifiy sohaga oid boshqa yo'nalishlardagi faoliyati",
+        null=True, blank=True)
+
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
