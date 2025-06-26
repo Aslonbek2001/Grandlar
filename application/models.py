@@ -47,17 +47,17 @@ class Application(models.Model):
 
 
 class SpiritualityBall(models.Model):
-    field1 = models.DecimalField(max_digits=3, decimal_places=1, default=0.0, validators=[ MinValueValidator(0), MaxValueValidator(20)], verbose_name="Kitobxonlik madaniyati (0-20)")
-    field2 = models.DecimalField(max_digits=3, decimal_places=1, default=0.0, validators=[ MinValueValidator(0), MaxValueValidator(20)], verbose_name=""" "5 muxim tashabbus" doirasidagi to'garaklarda faol ishtiroki (0-20)""")
-    field3 = models.DecimalField(max_digits=3, decimal_places=1, default=0.0, validators=[ MinValueValidator(0), MaxValueValidator(10)], verbose_name="Talabaning akademik o'zlashtirishi (0-10)")
-    field4 = models.DecimalField(max_digits=3, decimal_places=1, default=0.0, validators=[ MinValueValidator(0), MaxValueValidator(5)], verbose_name="Talabaning oliy ta'lim tashkilotining ichki tartib qoidalari va odob-axloq kodeksiga rioya etishi (0-5)")
-    field5 = models.DecimalField(max_digits=3, decimal_places=1, default=0.0, validators=[ MinValueValidator(0), MaxValueValidator(10)], verbose_name="Xalqaro, respublika, viloyat miqyosidagi ko'rik-tanlov, fan olimpiadalari va sport musobaqalarida erishgan natijalari (0-10)")
-    field6 = models.DecimalField(max_digits=3, decimal_places=1, default=0.0, validators=[ MinValueValidator(0), MaxValueValidator(5)], verbose_name="Talabaning darslarga to'liq va kechikmasdan kelishi (0-5)")
-    field7 = models.DecimalField(max_digits=3, decimal_places=1, default=0.0, validators=[ MinValueValidator(0), MaxValueValidator(10)], verbose_name=""" Talabalarning "Ma'rifat darslari" dagi faol ishtiroki (0-10)""")
-    field8 = models.DecimalField(max_digits=3, decimal_places=1, default=0.0, validators=[ MinValueValidator(0), MaxValueValidator(5)], verbose_name="Volontyorlik va jamoat ishlaridagi faolligi (0-5)")
-    field9 = models.DecimalField(max_digits=3, decimal_places=1, default=0.0, validators=[ MinValueValidator(0), MaxValueValidator(5)], verbose_name="Teatr va muzey, xiyobon, kino, tarixiy qadamjolarga tashriflar (0-5)")
-    field10 = models.DecimalField(max_digits=3, decimal_places=1, default=0.0, validators=[ MinValueValidator(0), MaxValueValidator(5)], verbose_name="Talabalarning sport bilan shug‘ullanishi va sog‘lom turmush tarziga amal qilishi (0-5)")
-    field11 = models.DecimalField(max_digits=3, decimal_places=1, default=0.0, validators=[ MinValueValidator(0), MaxValueValidator(5)], verbose_name="Manaviy-ma'rifiy sohaga oid boshqa yo'nalishlardagi faoligi (0-5)")
+    field1 = models.DecimalField(max_digits=4, decimal_places=2, default=0.00, validators=[ MinValueValidator(0), MaxValueValidator(20)], verbose_name="Kitobxonlik madaniyati (0-20)")
+    field2 = models.DecimalField(max_digits=4, decimal_places=2, default=0.00, validators=[ MinValueValidator(0), MaxValueValidator(20)], verbose_name=""" "5 muxim tashabbus" doirasidagi to'garaklarda faol ishtiroki (0-20)""")
+    field3 = models.DecimalField(max_digits=4, decimal_places=2, default=0.00, validators=[ MinValueValidator(0), MaxValueValidator(10)], verbose_name="Talabaning akademik o'zlashtirishi (0-10)")
+    field4 = models.DecimalField(max_digits=4, decimal_places=2, default=0.00, validators=[ MinValueValidator(0), MaxValueValidator(5)], verbose_name="Talabaning oliy ta'lim tashkilotining ichki tartib qoidalari va odob-axloq kodeksiga rioya etishi (0-5)")
+    field5 = models.DecimalField(max_digits=4, decimal_places=2, default=0.00, validators=[ MinValueValidator(0), MaxValueValidator(10)], verbose_name="Xalqaro, respublika, viloyat miqyosidagi ko'rik-tanlov, fan olimpiadalari va sport musobaqalarida erishgan natijalari (0-10)")
+    field6 = models.DecimalField(max_digits=4, decimal_places=2, default=0.00, validators=[ MinValueValidator(0), MaxValueValidator(5)], verbose_name="Talabaning darslarga to'liq va kechikmasdan kelishi (0-5)")
+    field7 = models.DecimalField(max_digits=4, decimal_places=2, default=0.00, validators=[ MinValueValidator(0), MaxValueValidator(10)], verbose_name=""" Talabalarning "Ma'rifat darslari" dagi faol ishtiroki (0-10)""")
+    field8 = models.DecimalField(max_digits=4, decimal_places=2, default=0.00, validators=[ MinValueValidator(0), MaxValueValidator(5)], verbose_name="Volontyorlik va jamoat ishlaridagi faolligi (0-5)")
+    field9 = models.DecimalField(max_digits=4, decimal_places=2, default=0.00, validators=[ MinValueValidator(0), MaxValueValidator(5)], verbose_name="Teatr va muzey, xiyobon, kino, tarixiy qadamjolarga tashriflar (0-5)")
+    field10 = models.DecimalField(max_digits=4, decimal_places=2, default=0.00, validators=[ MinValueValidator(0), MaxValueValidator(5)], verbose_name="Talabalarning sport bilan shug‘ullanishi va sog‘lom turmush tarziga amal qilishi (0-5)")
+    field11 = models.DecimalField(max_digits=4, decimal_places=2, default=0.00, validators=[ MinValueValidator(0), MaxValueValidator(5)], verbose_name="Manaviy-ma'rifiy sohaga oid boshqa yo'nalishlardagi faoligi (0-5)")
 
 
     @property
