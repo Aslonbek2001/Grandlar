@@ -20,22 +20,80 @@
                 <div class="card shadow-sm border-0">
                 <div class="card-body">
                     <div class="row gy-3">
-                    <div class="col-md-6">
-                        <p><strong>F.I.Sh:</strong> {{ application.application.student.user.full_name }}</p>
-                        <p><strong>Telefon:</strong> {{ application.application.student.user.phone }}</p>
-                        <p><strong>Mutaxassislik:</strong> {{ application.application.student.specialty }}</p>
-                        <p><strong>Guruh:</strong> {{ application.application.student.group }}</p>
-                        <p><strong>GPA:</strong> {{ application.application.student.gpa }}</p>
-                        <p><strong>Talaba holati:</strong> {{ application.application.student.studentStatus }}</p>
-                        <p><strong>O‘quv formati:</strong> {{ application.application.student.educationForm }}</p>
+                        <div class="col-md-6">
+                            <p><strong>Student Id:</strong> {{ application.application.student.student_id_number }}</p>
+                            <p><strong>F.I.Sh:</strong> {{ application.application.student.user.full_name }}</p>
+                            <p><strong>Telefon:</strong> {{ application.application.student.user.phone }}</p>
+                            <p><strong>Mutaxassislik:</strong> {{ application.application.student.specialty }}</p>
+                            <p><strong>Guruh:</strong> {{ application.application.student.group }}</p>
+                            <p><strong>GPA:</strong> {{ application.application.student.gpa }}</p>
+                            <p><strong>Talaba holati:</strong> {{ application.application.student.studentStatus }}</p>
+                            <p><strong>O‘quv formati:</strong> {{ application.application.student.educationForm }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <img class="img-thumbnail" width=150 src="{{ application.application.student.image.url }}" alt="Talaba rasmi">
+                            <p><strong>Bosqich:</strong> {{ application.application.student.level }}</p>
+                            <p><strong>Semestr:</strong> {{ application.application.student.semester }}</p>
+                            <p><strong>Manzil:</strong> {{ application.application.student.user.address }}</p>
+                            <p><strong>Hudud:</strong> {{ application.application.student.localityType }}</p>
+                        </div>
                     </div>
-                    <div class="col-md-6">
-                        <img class="img-thumbnail" width=150 src="{{ application.application.student.image.url }}" alt="Talaba rasmi">
-                        <p><strong>Bosqich:</strong> {{ application.application.student.level }}</p>
-                        <p><strong>Semestr:</strong> {{ application.application.student.semester }}</p>
-                        <p><strong>Manzil:</strong> {{ application.application.student.user.address }}</p>
-                        <p><strong>Hudud:</strong> {{ application.application.student.localityType }}</p>
-                    </div>
+                    <div>
+                        <h4 class="p-2 fs-4 fw-semibold text-primary border-bottom mb-3">
+                            <i class="bi bi-file-earmark-text-fill"></i> Fayllar
+                        </h4>
+                        <ul>
+                            <li>
+                                {% if application.application.reading_culture %}
+                                    <div class="p-2"><a href="{{ application.application.reading_culture.url }}">Kitobxonlik madaniyati</a></div>
+                                {% endif %}
+                            </li>
+                            <li>
+                                {% if application.application.five_initiatives %}
+                                    <div class="p-2"><a href="{{application.application.five_initiatives.url}}">"5 muhim tashabbus" doirasidagi to'garaklarda faol ishtiroki</a></div>
+                                {% endif %}
+                            </li>
+                            <li>
+                                {% if application.application.manners %}
+                                    <div class="p-2"><a href="{{application.application.manners.url}}">Oliy ta'lim tashkilotining ichki tartib qoidalari va odob-axloq kodeksiga rioya etishi</a></div>
+                                {% endif %}
+                            </li>
+                            <li>
+                                {% if application.application.participation_in_events %}
+                                    <div class="p-2"><a href="{{application.application.participation_in_events.url}}">Xalqaro, respublika, viloyat miqyosidagi ko'rik-tanlov, fan olimpiadalari va sport musobaqalarida erishgan natijalari</a></div>
+                                {% endif %}
+                            </li>
+                            <li>
+                                {% if application.application.attendance %}
+                                    <div class="p-2"><a href="{{application.application.attendance.url}}">Darslarga to'liq va kechikmasdan kelishi</a></div>
+                                {% endif %}
+                            </li>
+                            <li>
+                                {% if application.application.enlightenment_classes %}
+                                    <div class="p-2"><a href="{{application.application.enlightenment_classes.url}}">Talabaning "Ma'rifat darslari"dagi faol ishtiroki</a></div>
+                                {% endif %}
+                            </li>
+                            <li>
+                                {% if application.application.volunteer_work %}
+                                    <div class="p-2"><a href="{{application.application.volunteer_work.url}}">Volontyorlik va jamoat ishlaridagi faolligi</a></div>
+                                {% endif %}
+                            </li>
+                            <li>
+                                {% if application.application.cultural_visits %}
+                                    <div class="p-2"><a href="{{application.application.cultural_visits.url}}">Teatr va muzey, xiyobon, kino, tarixiy qadamjolarga tashriflar</a></div>
+                                {% endif %}
+                            </li>
+                            <li>
+                                {% if application.application.sports_activity %}
+                                    <div class="p-2"><a href="{{application.application.sports_activity.url}}">Talabalarning sport bilan shug‘ullanishi va sog‘lom turmush tarziga amal qilishi</a></div>
+                                {% endif %}
+                            </li>
+                            <li>
+                                {% if application.application.spiritual_enlightenment %}
+                                    <div class="p-2 mb-2"><a href="{{application.application.spiritual_enlightenment.url}}">Ma'naviy-ma'rifiy sohaga oid boshqa yo'nalishlardagi faoliyati </a></div>
+                                {% endif %}
+                            </li>
+                        </ul>
                     </div>
                     <h4 class="text-primary ">📄 Ariza holati</h4>
                                 <p><strong>Holat:</strong> 
@@ -121,7 +179,7 @@
 
                 {% endif %}
 
-                {% if request.user.role in 'training spirituality' %}
+                {% if request.user.role == 'training' %}
                     <h4 class="p-4 fs-4 fw-semibold text-primary border-bottom mb-4">
                         <i class="bi bi-pencil-square"></i> Ma'lumotlarni yangilash
                     </h4>
@@ -145,6 +203,31 @@
                         </div>
                     </form>
                 {% endif %}
+                {% if request.user.role == 'spirituality' %}
+                    <h4 class="p-4 fs-4 fw-semibold text-primary border-bottom mb-4">
+                        <i class="bi bi-pencil-square"></i> Ma'lumotlarni yangilash
+                    </h4>
+                    <form method="post" class="row g-3">
+                        {% csrf_token %}
+                        {% for field in form %}
+                            <div class="col-md-6">
+                                <div class="form-group mb-2">
+                                    <label for="{{ field.id_for_label }}" class="form-label fw-medium">{{ field.label }}</label>
+                                    {{ field }}
+                                    {% if field.errors %}
+                                        <div class="text-danger small">{{ field.errors }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endfor %}
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary px-4 py-2">
+                                <i class="bi bi-save"></i> Saqlash
+                            </button>
+                        </div>
+                    </form>
+                {% endif %}
+
             </div>
         </div>
         {% elif request.user.role == 'student' %}
@@ -155,7 +238,7 @@
                             <i class="bi bi-pencil-square"></i> Fayllar
                         </h4>
                         {% if application.application.reading_culture %}
-                        <div class="p-2"><a href="{{ application.application.reading_culture.url }}">Kitobxonlik madaniyati</a></div>
+                            <div class="p-2"><a href="{{ application.application.reading_culture.url }}">Kitobxonlik madaniyati</a></div>
                         {% endif %}
                         {% if application.application.five_initiatives %}
                             <div class="p-2"><a href="{{application.application.five_initiatives.url}}">"5 muhim tashabbus" doirasidagi to'garaklarda faol ishtiroki</a></div>

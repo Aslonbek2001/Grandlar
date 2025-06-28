@@ -17,7 +17,12 @@ class ApplicationCreateView(View):
     create_application_service = ApplicationCreationService()
 
     def get(self, request):
-        student = self.user_validation_service.validate(request)
+        try:
+            self.user_validation_service.validate(request)
+        except Exception as e:
+            messages.error(request, str(e))
+            return redirect('main:index')
+        
         application_form = ApplicationForm()
         return render(request, 'application/create.html', {
             'form': application_form,
@@ -26,15 +31,24 @@ class ApplicationCreateView(View):
 
     def post(self, request):
         form = ApplicationForm(request.POST, request.FILES)
-        student = self.user_validation_service.validate(request)
 
-        if not isinstance(student, Student):
-            return student
+        try:
+            student = self.user_validation_service.validate(request)
+        except Exception as e:
+            messages.error(request, str(e))
+            return redirect('main:index')
+        
         
         if not form.is_valid():
             return render(request, 'application/create.html', {'form': form})
-                
-        new_application = self.create_application_service.create(request, form)
-        messages.success(request, "Ariza muvofaqiyatli yuborildi")
-        return redirect('main:index') 
+        
+        try:
+            self.create_application_service.create(request, form)
+            messages.success(request, "Ariza muvofaqiyatli yuborildi")
+            return redirect('application:list') 
+        except Exception as e:
+            messages.error(request, str(e))
+            return render(request, 'application/create.html', {'form': form})
+
+        
     

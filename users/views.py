@@ -16,7 +16,7 @@ def custom_login_view(request):
             elif user.role == 'student':
                 
                 return redirect('main:index')
-            elif user.role in ('spirituality', 'training'):
+            elif user.role in ('spirituality', 'training', 'special'):
                 return redirect(reverse('application:list'))
         else:
             return render(request, 'users/login.html', {'error': 'F.I.Sh yoki parol noto‘g‘ri'})

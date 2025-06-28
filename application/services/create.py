@@ -8,11 +8,7 @@ class ApplicationCreationService:
     validation_application = ApplicationValidationService()
 
     def create(self, request, form) -> Application:
-        
-        validation_result = self.validation_application.validate(request)
-        if validation_result:
-            return validation_result
-        
+        self.validation_application.validate(request)
         student = request.user.profile
         application = form.save(commit=False)
         application.student = student

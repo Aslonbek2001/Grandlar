@@ -25,10 +25,16 @@ class ApplicationDetailView(View):
         choices = None
 
         if user.role == 'training':
-            form = TrainingBallForm(instance=ball.ball_training)
+            if ball.ball_training:
+                form = TrainingBallForm(instance=ball.ball_training)
+            else:
+                form = TrainingBallForm(initial={'field': ball.application.student.gpa * 16})
 
         elif user.role == 'spirituality':
-            form = SpiritualityBallForm(instance=ball.ball_spirituality)
+            if ball.ball_spirituality:
+                form = SpiritualityBallForm(instance=ball.ball_spirituality)
+            else:
+                form = SpiritualityBallForm(initial={'field3': ball.application.student.gpa * 2})
 
         elif user.role == 'special':
             app_obj = ball.application

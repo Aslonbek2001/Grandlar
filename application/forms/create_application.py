@@ -12,7 +12,6 @@ phone_regex = RegexValidator(
 )
 
 class ApplicationForm(forms.ModelForm):
-
     class Meta:
         model = Application
         fields = [
@@ -32,6 +31,7 @@ class ApplicationForm(forms.ModelForm):
             field: forms.FileInput(attrs={'class': 'form-control'})
             for field in fields
         }
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
@@ -39,6 +39,8 @@ class ApplicationForm(forms.ModelForm):
         for field in self.fields.values():
             field.required = True
     
+ 
+
         
     
   
