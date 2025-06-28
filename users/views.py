@@ -13,7 +13,10 @@ def custom_login_view(request):
             login(request, user)
             if user.is_superuser:
                 return redirect('/admin/')
-            else:
+            elif user.role == 'student':
+                
+                return redirect('main:index')
+            elif user.role in ('spirituality', 'training'):
                 return redirect(reverse('application:list'))
         else:
             return render(request, 'users/login.html', {'error': 'F.I.Sh yoki parol noto‘g‘ri'})
