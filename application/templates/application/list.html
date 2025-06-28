@@ -171,6 +171,9 @@
                     </td>
                     <td class="text-center">
                         <a href="{% url 'application:detail' app.pk %}" class="btn btn-sm my-btn-color">Ko'rish</a> 
+                        {% if request.user.role == 'student' %}
+                            <a href="{% url 'application:edit' app.pk %}" class="btn btn-sm my-btn-color">Tahrirlash</a>
+                        {% endif %}
                     </td> 
                 </tr>
             {% empty %}

@@ -81,7 +81,6 @@ class Application(models.Model):
         verbose_name="Ma'naviy-ma'rifiy sohaga oid boshqa yo'nalishlardagi faoliyati",
         null=True, blank=True)
 
-
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

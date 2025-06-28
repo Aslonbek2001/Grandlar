@@ -1,3 +1,4 @@
+
 {% extends 'result/base_page.html' %}
 {% load form_tags %}
 {% load static %}
@@ -6,36 +7,55 @@
 
 {% block content %}
 <div class="container py-5">
-    <div class="row justify-content-center">
-        <div class="col-md-8 col-lg-6">
-            <div class="card shadow border-0">
-                <div class="card-header text-center rounded-top">
-                    <h3 class="m-3 text-black fw-bold ">Ariza</h3>
-                </div>
-
-                <div class="card-body">
-                    <form method="post" enctype="multipart/form-data" novalidate>
-                        {% csrf_token %}
-                        <!-- Foydalanuvchi Ma'lumotlari Formasi -->
-                        <h5 class="mb-3 mt-2 text-secondary">Ma'lumotlaringiz</h5>
-                        {% for field in user_form %}
-                            <div class="mb-3">
-                                <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
-                                {{ field|add_class:"form-control" }}
-                                {% if field.errors %}
-                                    <div class="text-danger small">{{ field.errors }}</div>
-                                {% endif %}
-                            </div>
-                        {% endfor %}
-                        
-                        <p class='text-info mt-5'>
-                            Qo'shimcha ma'lumotlaringiz avtomatik to'ldiriladi va Sizning ma'lumotlaringiz ko'rib chiqish uchun yuboriladi
-                        </p>
-                        <button type="submit" class="btn btn-success w-100">Yuborish</button>
-                    </form>
-                </div>
-            </div>
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+      <div class="card shadow border-0">
+        <div class="card-header text-center rounded-top">
+          <h3 class="m-3 text-black fw-bold">Ariza</h3>
         </div>
+
+        <div class="card-body">
+          <form method="post" enctype="multipart/form-data" novalidate>
+            {% csrf_token %}
+
+            <!-- Talaba ma'lumotlari (o‘qish uchun) -->
+            <h4 class="mb-4 mt-2 text-secondary">Talaba ma'lumotlari</h4>
+            <div class="row mb-3">
+              <label class="form-label">F.I.SH</label>
+              <input type="text" class="form-control" value="{{ request.user.full_name }}" readonly>
+            </div>
+            <div class="row mb-4">
+              <label for="student_id" class="form-label">GPA</label>
+              <input type="text" id="student_gpa" name="student_gpa" class="form-control" value="{{ request.user.profile.gpa }}" readonly>
+            </div>
+
+            <!-- Qo'llab-quvvatlovchi hujjatlar yuklash -->
+            <h4 class="mb-3 text-secondary">Qo'llab-quvvatlovchi hujjatlar</h4>
+           {% for field in form %}
+              <div class="mb-4">
+                <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                {{ field|add_class:"form-control" }}
+                {% if field.value %}
+                  <a href="{{ field.value.url }}" target="_blank">Yuklangan faylni ko‘rish</a>
+                {% endif %}
+                {% if field.errors %}
+                  <div class="text-danger small">
+                    {% for error in field.errors %}
+                      {{ error }}<br>
+                    {% endfor %}
+                  </div>
+                {% endif %}
+              </div>
+            {% endfor %}
+
+            <button type="submit" class="btn btn-success w-100">Yuborish</button>
+          </form>
+        </div>
+      </div>
     </div>
+  </div>
 </div>
-{% endblock %} 
+{% endblock %}
+
+
+

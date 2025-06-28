@@ -1,7 +1,7 @@
 from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-83p+tgqvg4xo1hbn22rpofna@8&mr098pgzon-*r43y^n^x11q'
-DEBUG = False
+DEBUG = True
 ALLOWED_HOSTS = [
     "*"
 ]
@@ -69,24 +69,24 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'core.wsgi.application'
     
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
-
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "grandlar",
-        "USER": "grandlar",
-        "PASSWORD": "12345",
-        "HOST": "localhost",
-        "PORT": "5432",
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql",
+#         "NAME": "grandlar",
+#         "USER": "grandlar",
+#         "PASSWORD": "12345",
+#         "HOST": "localhost",
+#         "PORT": "5432",
+#     }
+# }
 
 
 

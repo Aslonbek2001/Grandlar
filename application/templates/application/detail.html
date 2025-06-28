@@ -119,49 +119,6 @@
                         </div>
                     </form>
 
-                    {% comment %} <script>
-                        document.getElementById('submit-btn').addEventListener('click', function () {
-                        const radios = document.querySelectorAll('input[name="status"]');
-                        let selectedValue = null;
-
-                        radios.forEach((radio) => {
-                            if (radio.checked) {
-                            selectedValue = radio.value;
-                            }
-                        });
-
-                        if (selectedValue) {
-                            alert("Tanlangan holat: " + selectedValue);
-                            // Bu yerga submit qilish yoki AJAX bilan yuborish qo‘shishingiz mumkin
-                        } else {
-                            alert("Iltimos, holatni tanlang.");
-                        }
-                        });
-                    </script> {% endcomment %}
-
-                    {% comment %} <form method="post">
-                        {% csrf_token %}
-                        <div class="mb-3">
-                            <label class="form-label fw-medium">Ariza holati</label>
-                            <div>
-                                {% for value, label in choices %}
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" 
-                                            name="application_status" 
-                                            id="status_{{ forloop.counter }}" 
-                                            value="{{ value }}"
-                                            {% if selected_status == value %}checked{% endif %}>
-                                        <label class="form-check-label" for="status_{{ forloop.counter }}">
-                                            {{ label }}
-                                        </label>
-                                    </div>
-                                {% endfor %}
-                            </div>
-                        </div>
-                        <button type="submit" class="btn btn-primary w-100">
-                            <i class="bi bi-save"></i> Saqlash
-                        </button>
-                    </form> {% endcomment %}
                 {% endif %}
 
                 {% if request.user.role in 'training spirituality' %}
@@ -190,6 +147,47 @@
                 {% endif %}
             </div>
         </div>
+        {% elif request.user.role == 'student' %}
+            <div class="col-12 col-md-6">
+                <div class="border p-3 rounded">
+                    <div class="d-flex flex-column ps-1">
+                        <h4 class="p-4 fs-4 fw-semibold text-primary border-bottom mb-4">
+                            <i class="bi bi-pencil-square"></i> Fayllar
+                        </h4>
+                        {% if application.application.reading_culture %}
+                        <div class="p-2"><a href="{{ application.application.reading_culture.url }}">Kitobxonlik madaniyati</a></div>
+                        {% endif %}
+                        {% if application.application.five_initiatives %}
+                            <div class="p-2"><a href="{{application.application.five_initiatives.url}}">"5 muhim tashabbus" doirasidagi to'garaklarda faol ishtiroki</a></div>
+                        {% endif %}
+                        {% if application.application.manners %}
+                            <div class="p-2"><a href="{{application.application.manners.url}}">Oliy ta'lim tashkilotining ichki tartib qoidalari va odob-axloq kodeksiga rioya etishi</a></div>
+                        {% endif %}
+                        {% if application.application.participation_in_events %}
+                            <div class="p-2"><a href="{{application.application.participation_in_events.url}}">Xalqaro, respublika, viloyat miqyosidagi ko'rik-tanlov, fan olimpiadalari va sport musobaqalarida erishgan natijalari</a></div>
+                        {% endif %}
+                        {% if application.application.attendance %}
+                            <div class="p-2"><a href="{{application.application.attendance.url}}">Darslarga to'liq va kechikmasdan kelishi</a></div>
+                        {% endif %}
+                        {% if application.application.enlightenment_classes %}
+                            <div class="p-2"><a href="{{application.application.enlightenment_classes.url}}">Talabaning "Ma'rifat darslari"dagi faol ishtiroki</a></div>
+                        {% endif %}
+                        {% if application.application.volunteer_work %}
+                            <div class="p-2"><a href="{{application.application.volunteer_work.url}}">Volontyorlik va jamoat ishlaridagi faolligi</a></div>
+                        {% endif %}
+                        {% if application.application.cultural_visits %}
+                            <div class="p-2"><a href="{{application.application.cultural_visits.url}}">Teatr va muzey, xiyobon, kino, tarixiy qadamjolarga tashriflar</a></div>
+                        {% endif %}
+                        {% if application.application.sports_activity %}
+                            <div class="p-2"><a href="{{application.application.sports_activity.url}}">Talabalarning sport bilan shug‘ullanishi va sog‘lom turmush tarziga amal qilishi</a></div>
+                        {% endif %}
+                        {% if application.application.spiritual_enlightenment %}
+                            <div class="p-2 mb-2"><a href="{{application.application.spiritual_enlightenment.url}}">Ma'naviy-ma'rifiy sohaga oid boshqa yo'nalishlardagi faoliyati </a></div>
+                        {% endif %}
+                    </div> 
+                    
+                </div>
+            </div>
         {% endif %}
     </div>
 </div>
