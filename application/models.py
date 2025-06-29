@@ -93,9 +93,7 @@ class Application(models.Model):
 
     def reject(self):
         self.application_status = ApplicationStatus.REJECTED
-        self.save()
-
-    
+        self.save()    
     
     class Meta:
         verbose_name = 'Ariza'
