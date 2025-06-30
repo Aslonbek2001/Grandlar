@@ -109,11 +109,18 @@
                 </a>
             {% endif %}
         </div>
-        <form method="get" action="{% url 'application:export_students_excel' %}">
-            <button type="submit" class="btn btn-success mb-2 mt-2 float-end">
-                <i class="bi bi-file-earmark-excel"></i> Arizalarni yuklab olish
-            </button>
-        </form>
+        {% if request.user.role == 'student' %}
+            <a href="{% url 'application:create' %}" class="btn btn-primary mb-2 mt-2 float-end">
+                <i class="bi bi-plus-circle"></i> Ariza yuborish
+            </a>
+        {% else %}
+            <form method="get" action="{% url 'application:export_students_excel' %}">
+                <button type="submit" class="btn btn-success mb-2 mt-2 float-end">
+                    <i class="bi bi-file-earmark-excel"></i> Arizalarni yuklab olish
+                </button>
+            </form>
+        {% endif %}
+        
 
 
         <div class="m-2">
