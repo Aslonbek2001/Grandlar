@@ -48,7 +48,7 @@ class Application(models.Model):
     
     participation_in_events = models.FileField(
         upload_to='uploads/',
-        verbose_name="Xalqaro, respublika, viloyat miqyosidagi ko'rik-tanlov, fan olimpiadalari va sport musobaqalarida erishgan natijalari",
+        verbose_name="Xalqaro, respublika, viloyat miqyosidagi ko'rik-tanlov, fan olimpiadalari va sport musobaqalarida erishgan natijalari (0-10)",
         null=True, blank=True)
     
     attendance = models.FileField(
@@ -58,27 +58,27 @@ class Application(models.Model):
     
     enlightenment_classes = models.FileField(
         upload_to='uploads/',
-        verbose_name='Talabaning "Ma\'rifat darslari"dagi faol ishtiroki',
+        verbose_name='Talabaning "Ma\'rifat darslari"dagi faol ishtirok (0-10)',
         null=True, blank=True)
     
     volunteer_work = models.FileField(
         upload_to='uploads/',
-        verbose_name="Volontyorlik va jamoat ishlaridagi faolligi",
+        verbose_name="Volontyorlik va jamoat ishlaridagi faolligi (0-5)",
         null=True, blank=True)
     
     cultural_visits = models.FileField(
         upload_to='uploads/',
-        verbose_name="Teatr va muzey, xiyobon, kino, tarixiy qadamjolarga tashriflar",
+        verbose_name="Teatr va muzey, xiyobon, kino, tarixiy qadamjolarga tashriflar (0-5)",
         null=True, blank=True)
     
     sports_activity = models.FileField(
         upload_to='uploads/',
-        verbose_name="Talabalarning sport bilan shug‘ullanishi va sog‘lom turmush tarziga amal qilishi",
+        verbose_name="Talabalarning sport bilan shug‘ullanishi va sog‘lom turmush tarziga amal qilishi (0-5)",
         null=True, blank=True)
     
     spiritual_enlightenment = models.FileField(
         upload_to='uploads/',
-        verbose_name="Ma'naviy-ma'rifiy sohaga oid boshqa yo'nalishlardagi faoliyati",
+        verbose_name="Ma'naviy-ma'rifiy sohaga oid boshqa yo'nalishlardagi faoliyati (0-5)",
         null=True, blank=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
