@@ -1,11 +1,7 @@
-from student.models import Student
 from application.models import Application, YearlyApplicationWindow
 from django.utils import timezone
 from django.core.exceptions import ObjectDoesNotExist
-from django.contrib import messages
-from django.shortcuts import render, redirect
 from application.utils import get_course
-
 
 class ApplicationValidationService:    
     def validate(self, request) -> Application:

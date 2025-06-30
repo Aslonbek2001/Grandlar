@@ -9,10 +9,12 @@
             <h1>Ta’lim grantlarini qayta taqsimlash uchun platforma.</h1>
             <p>Hemis orqali kirib grant uchun ariza topshiring!</p>
             <div class="d-flex">
-              {% if request.user.is_authenticated %}
-                <a href="{% url "application:create" %}" class="ms-1 btn-get-started">Ariza yuborish</a>
+              {% if request.user.role == 'training' or request.user.role == 'spirituality' or request.user.role == 'special' %}
+                  <a href="{% url "application:list" %}" class="ms-1 btn-get-started">Arizalar</a>
+              {% elif request.user.role == 'student' %}
+                  <a href="{% url "application:create" %}" class="ms-1 btn-get-started">Ariza yuborish</a>
               {% else %}
-                <a href="{% url 'login_with_hemis' %}" class="btn-get-started">Hemis orqali kirish</a>
+                  <a href="{% url 'login_with_hemis' %}" class="btn-get-started">Hemis orqali kirish</a>
               {% endif %}
               <a href="https://www.youtube.com/watch?v=dmy9i7GcbTE" class="glightbox btn-watch-video d-flex align-items-center"><i class="bi bi-play-circle"></i><span>Qo'lanma</span></a>
             </div>

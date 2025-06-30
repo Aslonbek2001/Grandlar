@@ -1,45 +1,39 @@
-from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, redirect
-from users.models import User
-from student.models import Student
 from django.views import View
 from application.forms.create_application import ApplicationForm
 from django.contrib import messages
-from application.models import Application, ApplicationStatus, BallApplication, YearlyApplicationWindow
-from django.utils import timezone
 from application.services.create import ApplicationCreationService
-from application.utils import get_course
-from application.services.validation import UserValidationService
+from application.services.validation import UserValidationService, CombinedValidationService
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-class ApplicationCreateView(View):
+class ApplicationCreateView(LoginRequiredMixin, View):
+    
 
-    user_validation_service = UserValidationService()
-    create_application_service = ApplicationCreationService()
+    def dispatch(self, request, *args, **kwargs):
+        self.validation_service = CombinedValidationService()
+        self.create_application_service = ApplicationCreationService()
 
-    def get(self, request):
         try:
-            self.user_validation_service.validate(request)
+            self.validation_service.validate(request)
         except Exception as e:
             messages.error(request, str(e))
             return redirect('main:index')
-        
+
+        return super().dispatch(request, *args, **kwargs)
+
+    login_url = 'users:login'
+    redirect_field_name = 'next'
+
+    def get(self, request):
         application_form = ApplicationForm()
         return render(request, 'application/create.html', {
             'form': application_form,
         })
-        
 
     def post(self, request):
         form = ApplicationForm(request.POST, request.FILES)
-
-        try:
-            student = self.user_validation_service.validate(request)
-        except Exception as e:
-            messages.error(request, str(e))
-            return redirect('main:index')
-        
-        
         if not form.is_valid():
+            messages.error(request, "Iltimos, formadagi xatolarni tuzating.")
             return render(request, 'application/create.html', {'form': form})
         
         try:
