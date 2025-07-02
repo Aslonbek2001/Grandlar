@@ -34,10 +34,6 @@ class ApplicationForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-
-        # Hamma filedlarni majburiy qilish
-        for field in self.fields.values():
-            field.required = True
     
  
 

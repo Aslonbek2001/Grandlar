@@ -1,11 +1,11 @@
 {% extends 'result/base_page.html' %}
 {% load static %}
-{% block title %}Arizalar Ro'yxati{% endblock %}
+{% block title %}Arizalar ro'yxati{% endblock %}
 
 {% block content %}
 <div class="container m-4">
     <div>
-        <h2 class="h2">Arizalar Ro'yxati</h2>
+        <h2 class="h2">Arizalar ro'yxati</h2>
         <div class="btn-group my-text" role="group" aria-label="Application status filters">
             {% if request.user.role == "training" %}
             <a href="?training=none"
