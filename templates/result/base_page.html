@@ -104,25 +104,53 @@
           <li><a href="{% url 'main:index' %}#contact">Aloqa</a></li>
 
           {% if request.user.is_authenticated %}
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" 
-                  data-bs-toggle="dropdown" aria-expanded="false">
-                  {{request.user.full_name}}
+            {% if request.user.role == 'student' %}
+              <li>
+                <a href="{% url 'application:list' %}">Arizalar</a>
+              </li>
+              <li>
+                <a href="{% url 'application:list' %}">{{request.user.full_name}}</a>
+              </li>
+              <li>
+                <a class="dropdown-item center" href="#">
+                  <form method="post" action="{% url 'main:logout' %}">
+                      {% csrf_token %}
+                      <button type="submit" class='btn btn-outline-link'><i class="bi bi-arrow-bar-left fs-6"></i> Chiqish</button>
+                  </form>
                 </a>
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  {% comment %} <li><a class="dropdown-item" href="#">Profil</a></li> {% endcomment %}
-                  <li><a class="dropdown-item" href="{% url 'application:list' %}">Arizalar</a></li>
-                  <li><hr class="dropdown-divider"></li>
+              </li>
+            {% else %}
+              <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" 
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    {{request.user.full_name}}
+                  </a>
                   <li>
-                    <a class="dropdown-item center" href="#">
-                      <form method="post" action="{% url 'main:logout' %}">
-                          {% csrf_token %}
-                          <button type="submit" class='btn btn-outline-link'><i class="bi bi-arrow-bar-left fs-6"></i> Chiqish</button>
-                      </form>
-                    </a>
-                  </li>
-                </ul>
-            </li>
+                      <a class="dropdown-item center" href="#">
+                        <form method="post" action="{% url 'main:logout' %}">
+                            {% csrf_token %}
+                            <button type="submit" class='btn btn-outline-link'><i class="bi bi-arrow-bar-left fs-6"></i> Chiqish</button>
+                        </form>
+                      </a>
+                    </li>
+                  <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    {% comment %} <li><a class="dropdown-item" href="#">Profil</a></li> {% endcomment %}
+                    <li><a class="dropdown-item" href="{% url 'application:list' %}">Arizalar</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li>
+                      <a class="dropdown-item center" href="#">
+                        <form method="post" action="{% url 'main:logout' %}">
+                            {% csrf_token %}
+                            <button type="submit" class='btn btn-outline-link'><i class="bi bi-arrow-bar-left fs-6"></i> Chiqish</button>
+                        </form>
+                      </a>
+                    </li>
+                  </ul>
+              </li>
+
+            {% endif %}
+
+
 
           {% else %}
           <a class="btn-getstarted" href="{% url 'users:login' %}">Kirish</a>

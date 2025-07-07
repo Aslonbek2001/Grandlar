@@ -11,6 +11,9 @@
       <div class="card shadow border-0">
         <div class="card-header text-center rounded-top">
           <h3 class="m-3 text-black fw-bold">Arizani tahrirlash</h3>
+            <p class="text-danger small pb-2">
+              Tizm 6 mb gacha bo'lgan pdf formatidagi fayllarni qabul qiladi.
+            </p>
         </div>
 
         <div class="card-body">
@@ -38,8 +41,6 @@
                   </label>
                 </div>
 
-
-
                 <!-- O‘ng ustun: File input -->
                 <div class="col-md-6">
                 {{ field|add_class:"form-control" }}
@@ -56,7 +57,7 @@
             {% endfor %}
 
 
-            <button type="submit" class="btn btn-primary w-100">Saqlash</button>
+            <button type="submit" class="btn btn-success w-100">Saqlash</button>
           </form>
         </div>
       </div>

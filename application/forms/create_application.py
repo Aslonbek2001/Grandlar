@@ -4,6 +4,8 @@ from application.models import Application
 from student.models import Student
 from users.models import User
 from django.core.validators import RegexValidator
+from django.core.exceptions import ValidationError
+from django.core.files.uploadedfile import UploadedFile
 
 # Telefon raqami validatori
 phone_regex = RegexValidator(
@@ -35,20 +37,13 @@ class ApplicationForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
     
- 
-
-        
-    
-  
-    # widgets = {
-    #         'reading_culture': forms.FileInput(attrs={'class': 'form-control'}),
-    #         'five_initiatives': forms.FileInput(attrs={'class': 'form-control'}),
-    #         'manners': forms.FileInput(attrs={'class': 'form-control'}),
-    #         'participation_in_events': forms.FileInput(attrs={'class': 'form-control'}),
-    #         'attendance': forms.FileInput(attrs={'class': 'form-control'}),
-    #         'enlightenment_classes': forms.FileInput(attrs={'class': 'form-control'}),
-    #         'volunteer_work': forms.FileInput(attrs={'class': 'form-control'}),
-    #         'cultural_visits': forms.FileInput(attrs={'class': 'form-control'}),
-    #         'sports_activity': forms.FileInput(attrs={'class': 'form-control'}),
-    #         'spiritual_enlightenment': forms.FileInput(attrs={'class': 'form-control'}),
-    #     }
+    def clean(self):
+        cleaned_data = super().clean()
+        for field in self.Meta.fields:
+            file = cleaned_data.get(field)
+            if isinstance(file, UploadedFile):  # Faqat yangi yuklangan fayllarni tekshir
+                if file.content_type != 'application/pdf':
+                    self.add_error(field, "Faqat PDF formatdagi fayl yuklash mumkin.")
+                if file.size > 10 * 1024 * 1024:
+                    self.add_error(field, "Fayl hajmi 10 MB dan oshmasligi kerak.")
+        return cleaned_data
