@@ -125,14 +125,6 @@
                     data-bs-toggle="dropdown" aria-expanded="false">
                     {{request.user.full_name}}
                   </a>
-                  <li>
-                      <a class="dropdown-item center" href="#">
-                        <form method="post" action="{% url 'main:logout' %}">
-                            {% csrf_token %}
-                            <button type="submit" class='btn btn-outline-link'><i class="bi bi-arrow-bar-left fs-6"></i> Chiqish</button>
-                        </form>
-                      </a>
-                    </li>
                   <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                     {% comment %} <li><a class="dropdown-item" href="#">Profil</a></li> {% endcomment %}
                     <li><a class="dropdown-item" href="{% url 'application:list' %}">Arizalar</a></li>
