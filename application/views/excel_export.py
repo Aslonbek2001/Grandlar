@@ -1,8 +1,8 @@
 from django.shortcuts import redirect
 from django.http import HttpResponse
 from django.contrib import messages
+from application.models import BallApplication
 from openpyxl import Workbook
-from application.models import Application
 
 def export_students_excel(request):
 
@@ -19,19 +19,30 @@ def export_students_excel(request):
     ws.title = "Talabalar"
 
     # Ustunlar
-    ws.append(['Full Name', 'Student ID Number', 'Passport Number', 'GPA', 'Application Status'])
+    ws.append(['Full Name', 'Student ID Number', 'Passport Number', 
+               'GPA', 'Akademi faollik','Ijtimoiy faolik'])
 
-    applications = Application.objects.select_related('student__user').all()
+    ball_applications = BallApplication.objects.select_related(
+        'application__student__user',
+        'ball_training',
+        'ball_spirituality'
+    ).all()
 
-    for app in applications:
-        student = app.student
+    for ba in ball_applications:
+        student = ba.application.student
         user = student.user
+
+        # Har doim mavjud bo'lishiga ishonch yo‘q, shuning uchun null holatlarni tekshiramiz
+        ball_training = ba.ball_training.field if ba.ball_training else ""
+        ball_spirituality_total = ba.ball_spirituality.total if ba.ball_spirituality else ""
+
         ws.append([
             user.full_name,
             student.student_id_number,
             student.passport_number,
-            float(student.gpa),
-            app.application_status
+            student.gpa,
+            ball_training,
+            ball_spirituality_total
         ])
 
     # HTTP javobga yozish

@@ -131,13 +131,17 @@
                     <h4 class="text-primary">Akademik o'zlashtirish ko'rsatkichini aniqlash bo'yicha maxsus komissiya qo'ygan bal</h4>
                     <div class="list-group ">
                         <div class="list-group-item d-flex justify-content-between align-items-center">
-                                Bal:
+                               Akademik o'zlashtirish ko'rsatkichi uchun qo'yilgan umumiy bal:
                                 <span class="badge my-btn-color rounded-pill">{{ application.ball_training.field }}</span>
                         </div>
                     </div>
                 
-                    <h4 class="text-primary mt-3">Ijtimoiy faollikni aniqlash bo'yicha komissiya </h4>
+                    <h4 class="text-primary mt-3">Ijtimoiy faollikni aniqlash bo'yicha komissiya  </h4>
                     <div class="list-group ">
+                        <div class="list-group-item d-flex justify-content-between align-items-center">
+                                Ijtimoiy faolik uchun qo'yilgan umumiy bal:
+                                <span class="badge fs-6  bg-primary  rounded-pill">{{application.ball_spirituality.total}}</span>
+                        </div>
                         {% for verbose, value in application.ball_spirituality.list_fields %}
                             <div class="list-group-item d-flex justify-content-between align-items-center">
                             {{ verbose }}
