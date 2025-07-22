@@ -20,7 +20,7 @@ def export_students_excel(request):
 
     # Ustunlar
     ws.append(['Full Name', 'Student ID Number', 'Passport Number', 
-               'GPA', 'Akademi faollik','Ijtimoiy faolik'])
+               'GPA', "Ta'lim",'Manaviyat'])
 
     ball_applications = BallApplication.objects.select_related(
         'application__student__user',
