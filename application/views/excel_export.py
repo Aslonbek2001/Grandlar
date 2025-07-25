@@ -19,7 +19,7 @@ def export_students_excel(request):
     ws.title = "Talabalar"
 
     # Ustunlar
-    ws.append(['Full Name', 'Student ID Number', 'Passport Number', 
+    ws.append(['Full Name', 'Student ID Number', 'Guruh', 'Passport Number', 
                'GPA', "Ta'lim",'Manaviyat'])
 
     ball_applications = BallApplication.objects.select_related(
@@ -39,6 +39,7 @@ def export_students_excel(request):
         ws.append([
             user.full_name,
             student.student_id_number,
+            student.group,
             student.passport_number,
             student.gpa,
             ball_training,
