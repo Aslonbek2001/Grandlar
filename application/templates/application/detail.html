@@ -97,25 +97,29 @@
                         </ul>
                     </div>
                     {% endif %}
-                    <h4 class="text-primary ">📄 Ariza holati</h4>
-                                <p><strong>Holat:</strong> 
-                                    {% if application.application.application_status == 'approved' %}
-                                        <span class='text-success'>Tasdiqlangan</span>
-                                    {% elif application.application.application_status == 'rejected' %}
-                                        <span class='text-danger'>Rad etilgan</span>
-                                    {% elif application.application.application_status == 'new' %}
-                                        {% if request.user.role == 'student' %}
-                                            <span class='text-primary'>Jarayonda</span>
-                                        {% else %}
-                                            <span class='text-warning'>Yangi kelgan</span>
-                                        {% endif %}
-                                    {% else %}
-                                        <span class='text-secondary'>Noma'lum</span>
-                                    {% endif %}
-                                </p>
-
-                                <p><strong>Yaratilgan sana:</strong> {{ application.application.created_at }}</p>
-
+                    <h4 class="text-primary semibold fs-4 fw-semibold">📄 Ariza holati</h4>
+                    <div class="border p-3 rounded m-2 fs-5 fw-medium">
+                        <p><strong>Holat:</strong> 
+                        {% if application.application.application_status == 'approved' %}
+                            <span class='text-success'>Tasdiqlangan</span>
+                        {% elif application.application.application_status == 'rejected' %}
+                            <span class='text-danger'>Rad etilgan</span>
+                        {% elif application.application.application_status == 'new' %}
+                            {% if request.user.role == 'student' %}
+                                <span class='text-primary'>Jarayonda</span>
+                            {% else %}
+                                <span class='text-warning'>Yangi kelgan</span>
+                            {% endif %}
+                        {% else %}
+                            <span class='text-secondary'>Noma'lum</span>
+                        {% endif %}
+                        </p>
+                        <p class="fs-5 fw-medium"><strong class='text-primary fs-5'>Akademik o'zlashtirish ko'rsatkichi:</strong> {{ application.ball_training }}</p>
+                        <p class="fs-5 fw-medium"><strong class='text-primary fs-5'>Ijtimoiy faollik uchun qo'yilgan bal:</strong> {{ application.ball_spirituality.total }}</p>
+                        <p class="fs-4 fw-medium"><strong class='text-success fs-4'>Jami ball:</strong> {{ application.total_ball }}</p>
+                        
+                    </div>
+                    <p><strong>Yuborilgan sana:</strong> {{ application.application.created_at }}</p>
                 </div>
             </div>
             </div>
