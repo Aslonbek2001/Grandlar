@@ -1,6 +1,9 @@
 from django.views import View
 from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib import messages
+from django.shortcuts import redirect
+from django.urls import reverse
+from datetime import datetime
 from application.models import BallApplication
 from application.forms.ball_forms import SpiritualityBallForm, TrainingBallForm, SpecialForm
 
@@ -92,3 +95,21 @@ class ApplicationDetailView(View):
             'application': ball,
             'form': form
         })
+
+
+
+
+class ApplicationByUserView(View):
+    def get(self, request, user_id):
+        current_year = datetime.now().year
+        try:
+            # Arizani topamiz
+            ball = BallApplication.objects.get(
+                application__student__user__id=user_id,
+                application__created_at__year=current_year
+            )
+            # Tayyor viewga redirect qilamiz
+            return redirect(reverse('application:detail', kwargs={'pk': ball.pk}))
+        except BallApplication.DoesNotExist:
+            messages.error(request, "Ushbu foydalanuvchining joriy yil uchun arizasi topilmadi.")
+            return redirect('main:index')

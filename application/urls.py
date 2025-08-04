@@ -2,7 +2,7 @@ from django.urls import path
 from application.views.view_application import ApplicationCreateView
 from application.views.application_success import ApplicationSuccessView
 from application.views.applications_list import ApplicationListView
-from application.views.application_detail import ApplicationDetailView
+from application.views.application_detail import ApplicationDetailView, ApplicationByUserView
 from application.views.edit_application import ApplicationUpdateView
 from application.views.excel_export import export_students_excel
 
@@ -15,4 +15,5 @@ urlpatterns = [
     path("<int:pk>/", ApplicationDetailView.as_view(), name="detail"),
     path('applications/<int:pk>/edit/', ApplicationUpdateView.as_view(), name='edit'),
     path('export-students-excel/', export_students_excel, name='export_students_excel'),
+    path('by-user/<int:user_id>/', ApplicationByUserView.as_view(), name='by_user'),
 ]

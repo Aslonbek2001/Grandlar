@@ -114,10 +114,15 @@
                             <span class='text-secondary'>Noma'lum</span>
                         {% endif %}
                         </p>
-                        <p class="fs-5 fw-medium"><strong class='text-primary fs-5'>Akademik o'zlashtirish ko'rsatkichi:</strong> {{ application.ball_training }}</p>
-                        <p class="fs-5 fw-medium"><strong class='text-primary fs-5'>Ijtimoiy faollik uchun qo'yilgan bal:</strong> {{ application.ball_spirituality.total }}</p>
-                        <p class="fs-4 fw-medium"><strong class='text-success fs-4'>Jami ball:</strong> {{ application.total_ball }}</p>
-                        
+                        {% if application.ball_training %}
+                            <p class="fs-5 fw-medium"><strong class='text-primary fs-5'>Akademik o'zlashtirish ko'rsatkichi:</strong> {{ application.ball_training }}</p>
+                        {% endif %}
+                        {% if application.ball_spirituality %}
+                            <p class="fs-5 fw-medium"><strong class='text-primary fs-5'>Ijtimoiy faollik ko'rsatkichi:</strong> {{ application.ball_spirituality.total }}</p>
+                        {% endif %}
+                        {% if application.total_ball %}
+                            <p class="fs-4 fw-medium"><strong class='text-success fs-4'>Jami ball:</strong> {{ application.total_ball }}</p>
+                        {% endif %}
                     </div>
                     <p><strong>Yuborilgan sana:</strong> {{ application.application.created_at }}</p>
                 </div>

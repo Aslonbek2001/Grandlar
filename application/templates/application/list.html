@@ -135,60 +135,64 @@
             {% endif %}
         </div>
     </div>
-    <table class="table table-bordered table-hover mt-3 mb-5">
-        <thead class="thead-light">
-            <tr class="text-center">
-                <th>#</th>
-                <th>F.I.Sh</th>
-                {% if request.user.role != 'student' %}
-                    <th>Ball</th>
-                {% endif %}
-                <th>Yuborilgan Sana</th>
-                <th>Status</th>
-                <th>Ko'rish</th>
-            </tr>
-        </thead>
-        <tbody class="align-middle">
-            {% for app in applications %}
-                <tr>
-                    <td class="text-center">{{ forloop.counter }}</td>
-                    <td>
-                        <a href="{% url 'application:detail' app.pk %}" class="my-text">{{ app.application.student.user.full_name }}</a> 
-                    </td>
-                    {% if request.user.role == 'training' %}
-                        <td class="text-center">{{ app.ball_training.field }}</td>
-                    {% elif request.user.role == 'spirituality' %}
-                        <td class="text-center">{{ app.ball_spirituality.total }}</td>
-                    {% elif request.user.role == 'special' %}
-                        <td class="text-center">Umumiy bal: {{ app.total_ball }}</td>
+
+    <div class="card-body p-0">
+        <table class="table table-bordered table-hover mt-3 mb-5">
+            <thead class="thead-light">
+                <tr class="text-center">
+                    <th>#</th>
+                    <th>F.I.Sh</th>
+                    {% if request.user.role != 'student' %}
+                        <th>Ball</th>
                     {% endif %}
-                    <td class="text-center">{{ app.application.created_at|date:"Y-m-d H:i" }}</td>
-                    <td class="text-center text-primary">
-                        {% if app.application.application_status == 'approved' %}
-                            <img src="{% static 'icons/check.png' %}" style="width: 20px;" alt="Tasdiqlangan"></img>
-                        {% elif app.application.application_status == 'rejected' %}
-                            <img src="{% static 'icons/cross.png' %}" style="width: 20px;" alt="Rad etilgan"></img>
-                        {% else %}
-                            {% if request.user.role == 'student' %}
-                                Jarayonda
+                    <th>Yuborilgan Sana</th>
+                    <th>Status</th>
+                    <th>Ko'rish</th>
+                </tr>
+            </thead>
+            <tbody class="align-middle">
+                {% for app in applications %}
+                    <tr>
+                        <td class="text-center">{{ forloop.counter }}</td>
+                        <td>
+                            <a href="{% url 'application:detail' app.pk %}" class="my-text">{{ app.application.student.user.full_name }}</a> 
+                        </td>
+                        {% if request.user.role == 'training' %}
+                            <td class="text-center">{{ app.ball_training.field }}</td>
+                        {% elif request.user.role == 'spirituality' %}
+                            <td class="text-center">{{ app.ball_spirituality.total }}</td>
+                        {% elif request.user.role == 'special' %}
+                            <td class="text-center">Umumiy bal: {{ app.total_ball }}</td>
+                        {% endif %}
+                        <td class="text-center">{{ app.application.created_at|date:"Y-m-d H:i" }}</td>
+                        <td class="text-center text-primary">
+                            {% if app.application.application_status == 'approved' %}
+                                <img src="{% static 'icons/check.png' %}" style="width: 20px;" alt="Tasdiqlangan"></img>
+                            {% elif app.application.application_status == 'rejected' %}
+                                <img src="{% static 'icons/cross.png' %}" style="width: 20px;" alt="Rad etilgan"></img>
                             {% else %}
-                                <img src="{% static 'icons/bell.png' %}" style="width: 20px;" alt="Yangi kelgan"></img>
+                                {% if request.user.role == 'student' %}
+                                    Jarayonda
+                                {% else %}
+                                    <img src="{% static 'icons/bell.png' %}" style="width: 20px;" alt="Yangi kelgan"></img>
+                                {% endif %}
                             {% endif %}
-                        {% endif %}
-                    </td>
-                    <td class="text-center">
-                        <a href="{% url 'application:detail' app.pk %}" class="btn btn-sm my-btn-color">Ko'rish</a> 
-                        {% if request.user.role == 'student' %}
-                            <a href="{% url 'application:edit' app.pk %}" class="btn btn-sm my-btn-color">Tahrirlash</a>
-                        {% endif %}
-                    </td> 
-                </tr>
-            {% empty %}
-                <tr>
-                    <td colspan="5" class="text-center p-5">Hozircha hech qanday ariza yo'q.</td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+                        </td>
+                        <td class="text-center">
+                            <a href="{% url 'application:detail' app.pk %}" class="btn btn-sm my-btn-color">Ko'rish</a> 
+                            {% if request.user.role == 'student' %}
+                                <a href="{% url 'application:edit' app.pk %}" class="btn btn-sm my-btn-color">Tahrirlash</a>
+                                <a class="btn btn-sm my-btn-color" href="{% url 'appeal:appeal_create' %}">Apilatsiyaga</a>
+                            {% endif %}
+                        </td> 
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="5" class="text-center p-5">Hozircha hech qanday ariza yo'q.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
 {% endblock %}

@@ -86,7 +86,7 @@
 
 </head>
 
-<body class="index-page">
+<body class="index-page d-flex flex-column min-vh-100">
   <header id="header" class="header d-flex align-items-center sticky-top">
     <div class="test-banner mb-5">
       <div class="scrolling-text">Sayt test rejimida ishlamoqda. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;—&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Sayt test rejimida ishlamoqda.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; —  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sayt test rejimida ishlamoqda.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;—&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sayt test rejimida ishlamoqda.</div>
@@ -104,6 +104,9 @@
           <li><a href="{% url 'main:index' %}#contact">Aloqa</a></li>
 
           {% if request.user.is_authenticated %}
+            <li>
+                <a href="{% url 'appeal:appeal_list' %}">Apelatsiya</a>
+            </li>
             {% if request.user.role == 'student' %}
               <li>
                 <a href="{% url 'application:list' %}">Arizalar</a>
@@ -156,7 +159,7 @@
 
 
 
-  <main>
+  <main class="flex-fill">
     {% if messages %}
       <div aria-live="polite" aria-atomic="true" class="position-relative">
         <div class="toast-container position-fixed bottom-0 end-0 p-4 m-5" style="z-index: 1055;">

@@ -1,0 +1,116 @@
+{% extends 'result/base_page.html' %}
+
+{% block content %}
+
+
+
+<div class="container mt-4">
+    <div class="card shadow-sm">
+        <div class="card-header position-relative text-center rounded-top">
+            <h3 class="m-3 text-black fw-bold">Apelatsiyalar ro'yxati</h3>
+
+            {% if request.user.role == 'student' %}
+                <a href="{% url 'appeal:appeal_create' %}"
+                class="btn btn-md my-btn-color fw-bold position-absolute top-50 end-0 translate-middle-y me-3">
+                    Apelatsiyaga berish
+                </a>
+            {% endif %}
+        </div>
+
+        <div class="card-body p-0">
+            <table class="table table-striped table-hover mb-0">
+                <thead class="table-light">
+                    <tr class="py-2">
+                        <th class="text-center">Apelatsiya (Fayl va sanalar)</th>
+                        <th class="text-center">Javob (Matn va sanalar)</th>
+                        {% if request.user.role != 'student' %}
+                            <th class="text-center">Amallar</th>
+                        {% endif %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for appeal in appeals %}
+                    <tr class="py-3 px-2">
+                        <!-- Apelatsiya va Ariza-->
+                        <td class="py-3 px-2 w-30">
+                            {% if appeal.message_file %}
+                                <div class="d-flex justify-content-between text-muted middle mb-2">
+                                    <span class="btn btn-md">
+
+                                       <a class="mx-2" href="{% url 'application:by_user' appeal.student.user.id %}">
+                                        {% if request.user.role == 'student' %}
+                                            MENING GRAND UCHUN ARIZAM
+                                        {% else %}
+                                            {{ appeal.student.user.full_name }} ARIZASI
+                                        {% endif %}
+                                        </a>
+                                    </span>
+                                    <span>
+                                        <a href="{{ appeal.message_file.url }}" class="btn btn-sm btn-outline-success">
+                                            <i class="bi bi-file-earmark-text"></i> Apilatsiya fayli
+                                        </a>
+                                    </span>
+                                </div>
+                            {% endif %}
+                            <div class="d-flex justify-content-between text-muted small">
+                                <span>
+                                    <i class="bi bi-calendar-plus"></i>
+                                    {{ appeal.created_at|date:"Y-m-d H:i" }}
+                                </span>
+                                <span>
+                                    <i class="bi bi-pencil-square"></i>
+                                    {{ appeal.updated_at|date:"Y-m-d H:i" }}
+                                </span>
+                            </div>
+                        </td>
+
+                        
+                        {% if request.user.role != 'student' %}
+                           <!-- Javob -->
+                            <td class="text-center align-middle  w-50">
+                                {% if appeal.answer %}
+                                    <div class="mb-1 p-3 ">{{ appeal.answer.answer_text }}</div>
+                                    <div class="text-muted small d-flex justify-content-between">
+                                        <span>
+                                            <i class="bi bi-calendar-plus"></i>
+                                            {{ appeal.answer.created_at|date:"Y-m-d H:i" }}
+                                        </span>
+                                        <span>
+                                            <i class="bi bi-pencil-square"></i>
+                                            {{ appeal.answer.updated_at|date:"Y-m-d H:i" }}
+                                        </span>
+                                    </div>
+                                {% endif %}
+                            </td> 
+                        {% endif %}
+
+                        <!-- Amallar -->
+                        <td class="text-center align-middle w-30">
+                            <div class="d-flex justify-content-center">
+                                {% if request.user.is_authenticated %}  
+                                    {% if request.user.role  == 'training' or request.user.role  == 'spirituality' or request.user.role  == 'special' %}
+                                        {% if not appeal.answer %}
+                                            <a href="#" class="btn btn-sm btn-outline-success">Javob yozish</a>
+                                        {% else %}
+                                            <a href="#" class="btn btn-sm btn-outline-warning">Tahrirlash</a>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endif %}
+                            </div>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="3" class="text-center text-muted">Apelatsiyalar mavjud emas.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+
+{% endblock content %}
