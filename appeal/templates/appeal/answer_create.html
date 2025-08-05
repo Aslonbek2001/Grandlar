@@ -1,0 +1,31 @@
+{% extends 'result/base_page.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow rounded-md">
+        <div class="card-header text-center bg-white text-dark">
+            <h4>Apellyatsiyaga javob yozish</h4>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                
+                <div class="mb-3">
+                    <label for="id_answer_text" class="form-label">{{ form.answer_text.label }}</label>
+                    {{ form.answer_text }}
+                    {% if form.answer_text.errors %}
+                        <div class="text-danger small mt-1">
+                            {{ form.answer_text.errors }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-success py-2 px-3">Yuborish</button>
+                    <a href="{% url 'appeal:appeal_list' %}" class="btn btn-secondary py-2 px-3">Bekor qilish</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

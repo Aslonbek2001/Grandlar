@@ -1,4 +1,5 @@
 {% extends 'result/base_page.html' %}
+{% load static %}
 
 {% block content %}
 <div class="container mt-5 mb-5">
@@ -6,13 +7,17 @@
     <div class="col-md-6">
       <div class="card shadow-sm">
         <div class="card-header text-center rounded-top">
-          <h3 class="m-3 text-black fw-bold">Apelatsiya yuborish</h3>
+          <h3 class="m-3 text-black fw-bold">Apellyatsiya yuborish</h3>
         </div>
         <div class="card-body my-5">
+          <div class="mb-3 fs-4 text-center">Appelatsiyaga arizasi uchun namuna:
+              <a href="{% static 'namuna.pdf' %}" target="_blank" class="btn btn-outline-primary">
+                  Arizani ko‘rish
+              </a>
+            </div>
           <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
-            <div class="pt-3 mb-2">
-              <label for="{{ form.message_file.id_for_label }}" class="form-label">
+              <label for="{{ form.message_file.id_for_label }}" class="form-label mb-2">
                 {{ form.message_file.label }}
                 {% if form.message_file.field.required %}
                   <span class="text-danger">*</span>

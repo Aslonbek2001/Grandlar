@@ -7,12 +7,12 @@
 <div class="container mt-4">
     <div class="card shadow-sm">
         <div class="card-header position-relative text-center rounded-top">
-            <h3 class="m-3 text-black fw-bold">Apelatsiyalar ro'yxati</h3>
+            <h3 class="m-3 text-black fw-bold">Apellyatsiyalar ro'yxati</h3>
 
             {% if request.user.role == 'student' %}
                 <a href="{% url 'appeal:appeal_create' %}"
                 class="btn btn-md my-btn-color fw-bold position-absolute top-50 end-0 translate-middle-y me-3">
-                    Apelatsiyaga berish
+                    Apellyatsiyaga berish
                 </a>
             {% endif %}
         </div>
@@ -21,8 +21,8 @@
             <table class="table table-striped table-hover mb-0">
                 <thead class="table-light">
                     <tr class="py-2">
-                        <th class="text-center">Apelatsiya (Fayl va sanalar)</th>
-                        <th class="text-center">Javob (Matn va sanalar)</th>
+                        <th class="text-center">Apellyatsiya (Fayl va sanalar)</th>
+                        <th class="text-center">Javob (Matn va sana)</th>
                         {% if request.user.role != 'student' %}
                             <th class="text-center">Amallar</th>
                         {% endif %}
@@ -32,7 +32,7 @@
                     {% for appeal in appeals %}
                     <tr class="py-3 px-2">
                         <!-- Apelatsiya va Ariza-->
-                        <td class="py-3 px-2 w-30">
+                        <td class="py-3 px-2 w-50 text-center align-middle ">
                             {% if appeal.message_file %}
                                 <div class="d-flex justify-content-between text-muted middle mb-2">
                                     <span class="btn btn-md">
@@ -47,7 +47,7 @@
                                     </span>
                                     <span>
                                         <a href="{{ appeal.message_file.url }}" class="btn btn-sm btn-outline-success">
-                                            <i class="bi bi-file-earmark-text"></i> Apilatsiya fayli
+                                            <i class="bi bi-file-earmark-text"></i> Apellyatsiya fayli
                                         </a>
                                     </span>
                                 </div>
@@ -67,10 +67,15 @@
                         
                         {% if request.user.role != 'student' %}
                            <!-- Javob -->
-                            <td class="text-center align-middle  w-50">
+                            <td class="text-center align-middle w-40">
                                 {% if appeal.answer %}
-                                    <div class="mb-1 p-3 ">{{ appeal.answer.answer_text }}</div>
-                                    <div class="text-muted small d-flex justify-content-between">
+                                    <div class="d-flex justify-content-center">
+                                        <div class="mb-1 p-3 border rounded bg-light text-start"
+                                            style="width: 400px; word-break: break-word;">
+                                            {{ appeal.answer.answer_text }}
+                                        </div>
+                                    </div>
+                                    <div class="text-muted small d-flex justify-content-between mt-2">
                                         <span>
                                             <i class="bi bi-calendar-plus"></i>
                                             {{ appeal.answer.created_at|date:"Y-m-d H:i" }}
@@ -81,27 +86,46 @@
                                         </span>
                                     </div>
                                 {% endif %}
+                            </td>
+                            <!-- Javob -->
+                        {% elif request.user.role == 'student' %}
+                            <td class="text-center align-middle w-50">
+                                {% if appeal.answer %}
+                                    <div class="text-center align-middle">
+                                        <div class="mb-1 pt-3 px-3 py-5 w-60 border rounded bg-light">{{ appeal.answer.answer_text }}</div>
+                                        <div class="text-muted small d-flex justify-content-between">
+                                            <span>
+                                                <i class="bi bi-calendar-plus"></i>
+                                                {{ appeal.answer.created_at|date:"Y-m-d H:i" }}
+                                            </span>
+                                            <span>
+                                                <i class="bi bi-pencil-square"></i>
+                                                {{ appeal.answer.updated_at|date:"Y-m-d H:i" }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                {% endif %}
                             </td> 
                         {% endif %}
 
                         <!-- Amallar -->
-                        <td class="text-center align-middle w-30">
+                        {% if request.user.role != 'student' %}
+                        <td class="text-center align-middle w-25">
                             <div class="d-flex justify-content-center">
-                                {% if request.user.is_authenticated %}  
-                                    {% if request.user.role  == 'training' or request.user.role  == 'spirituality' or request.user.role  == 'special' %}
-                                        {% if not appeal.answer %}
-                                            <a href="#" class="btn btn-sm btn-outline-success">Javob yozish</a>
-                                        {% else %}
-                                            <a href="#" class="btn btn-sm btn-outline-warning">Tahrirlash</a>
-                                        {% endif %}
+                                {% if request.user.role  == 'training' or request.user.role  == 'spirituality' or request.user.role  == 'special' %}
+                                    {% if not appeal.answer %}
+                                        <a href="{% url 'appeal:answer_create' appeal.id %}" class="btn btn-sm btn-outline-success">Javob yozish</a>
+                                    {% else %}
+                                        <a href="#" class="btn btn-sm btn-outline-warning">Tahrirlash</a>
                                     {% endif %}
                                 {% endif %}
                             </div>
                         </td>
+                        {% endif %}
                     </tr>
                     {% empty %}
                     <tr>
-                        <td colspan="3" class="text-center text-muted">Apelatsiyalar mavjud emas.</td>
+                        <td colspan="3" class="text-center text-muted">Apellyatsiyalar mavjud emas.</td>
                     </tr>
                     {% endfor %}
                 </tbody>

@@ -9,6 +9,10 @@ class AppealConditions(models.Model):
     end_date = models.DateField(verbose_name="Tugash sanasi")
     year = models.IntegerField(verbose_name="Yil")
 
+    class Meta:
+        verbose_name = "Apellyatsiya shartlari"
+        verbose_name_plural = "Apellyatsiya shartlari"
+
     def __str__(self):
         return f"{self.year} yil uchun apelatsiya shartlari"    
 
@@ -20,6 +24,10 @@ class Appeal(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        verbose_name = "Apellyatsiya"
+        verbose_name_plural = "Apellyatsiyalar"
+
     def __str__(self):
         return f"Appeal from {self.student} - {self.created_at.strftime('%Y-%m-%d %H:%M:%S')}"
 
@@ -30,6 +38,10 @@ class AnswerToAppeal(models.Model):
     show_student = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True, blank=True, null=True)
+
+    class Meta:
+        verbose_name = "Apellyatsiyaga javob"
+        verbose_name_plural = "Apellyatsiyaga javoblar"
 
     def __str__(self):
         return f"Answer to {self.appeal} by {self.expert.username} on {self.created_at.strftime('%Y-%m-%d %H:%M:%S')}"

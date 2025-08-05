@@ -8,7 +8,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 class ApplicationCreateView(LoginRequiredMixin, View):
     
-
     def dispatch(self, request, *args, **kwargs):
         self.validation_service = CombinedValidationService()
         self.create_application_service = ApplicationCreationService()

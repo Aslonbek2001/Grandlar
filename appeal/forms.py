@@ -1,4 +1,4 @@
-from .models import Appeal
+from .models import Appeal, AnswerToAppeal
 from django import forms
 
 class AppealForm(forms.ModelForm):
@@ -33,3 +33,24 @@ class AppealForm(forms.ModelForm):
                 raise forms.ValidationError("Faqat PDF formatdagi faylga ruxsat beriladi.")
 
         return file
+
+
+
+class AnswerForm(forms.ModelForm):
+    class Meta:
+        model = AnswerToAppeal
+        fields = ['answer_text']
+        widgets = {
+            'answer_text': forms.Textarea(attrs={
+                'class': 'form-control',
+                'rows': 5,
+                'placeholder': 'Javobingizni shu yerga yozing...'
+            }),
+        }
+        labels = {
+            'answer_text': 'Javob matni',
+        }
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['answer_text'].required = True

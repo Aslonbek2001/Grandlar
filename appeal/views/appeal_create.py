@@ -13,7 +13,7 @@ class AppealCreateView(LoginRequiredMixin, CreateView):
     model = Appeal
     form_class = AppealForm
     template_name = 'appeal/appeal_create.html'
-    success_url = reverse_lazy('main:index')
+    success_url = reverse_lazy('appeal:appeal_list')
 
     def dispatch(self, request, *args, **kwargs):
         # 1️⃣ Vaqt tekshirish
