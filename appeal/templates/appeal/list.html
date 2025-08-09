@@ -116,7 +116,7 @@
                                     {% if not appeal.answer %}
                                         <a href="{% url 'appeal:answer_create' appeal.id %}" class="btn btn-sm btn-outline-success">Javob yozish</a>
                                     {% else %}
-                                        <a href="#" class="btn btn-sm btn-outline-warning">Tahrirlash</a>
+                                        <a href="{% url 'appeal:answer_update' appeal.answer.id %}" class="btn btn-sm btn-outline-warning">Tahrirlash</a>
                                     {% endif %}
                                 {% endif %}
                             </div>
