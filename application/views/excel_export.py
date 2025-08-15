@@ -8,10 +8,10 @@ def export_students_excel(request):
 
     user = request.user
 
-    if user.role != 'special':
+    if not user.is_authenticated or user.role != 'special':
         messages.info(request, "Sizga bunday ruxsat berilmagan!")
         return redirect('application:list')
-    
+        
     print("user:", user.role)
     
     wb = Workbook()
@@ -20,7 +20,7 @@ def export_students_excel(request):
 
     # Ustunlar
     ws.append(['Full Name', 'Student ID Number', 'Guruh', 'Passport Number', 
-               'GPA', "Ta'lim",'Manaviyat'])
+               'GPA', "Ta'lim",'Manaviyat', "Umumiy bal"])
 
     ball_applications = BallApplication.objects.select_related(
         'application__student__user',
@@ -43,7 +43,8 @@ def export_students_excel(request):
             student.passport_number,
             student.gpa,
             ball_training,
-            ball_spirituality_total
+            ball_spirituality_total,
+            ba.total_ball
         ])
 
     # HTTP javobga yozish

@@ -35,7 +35,7 @@ def save_user_and_student(user_info: dict):
         defaults={
             "student_id_number": user_info.get("student_id_number"),
             "image": image_file if image_file else None,
-            "passport_number": user_info.get("passport_number"),
+            "passport_number": user_info.get("passport_number") or "Ma'lumot kelmadi.",
             "gpa": data.get('avg_gpa'),
             "specialty": data.get("specialty", {}).get("name", ""),
             "studentStatus": data.get("studentStatus", {}).get("name", ""),

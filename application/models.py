@@ -1,6 +1,7 @@
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from student.models import Student
+from decimal import Decimal
 
 
 """Application Status - Ariza holati"""
@@ -160,8 +161,8 @@ class BallApplication(models.Model):
 
     @property
     def total_ball(self):
-        spirituality_score = self.ball_spirituality.total if self.ball_spirituality else 0
-        training_score = self.ball_training.field if self.ball_training else 0
+        spirituality_score = self.ball_spirituality.total if self.ball_spirituality else Decimal('0.00') 
+        training_score = self.ball_training.field if self.ball_training else Decimal('0.00') 
         return (spirituality_score + training_score)
 
     def __str__(self):
